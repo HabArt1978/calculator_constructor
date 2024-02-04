@@ -1,0 +1,28 @@
+@import '@/sass/variables';
+
+.numericBlockContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  height: max-content;
+  border-radius: 6px;
+  padding: 5px;
+  -webkit-box-shadow: 0px 3px 6px 0px rgba(34, 60, 80, 0.15);
+  -moz-box-shadow: 0px 3px 6px 0px rgba(34, 60, 80, 0.15);
+  box-shadow: 0px 3px 6px 0px rgba(34, 60, 80, 0.15);
+}
+
+.numberedButton {
+  width: 32%;
+  height: 50px;
+
+  &:nth-last-child(n + 2) {
+    margin-bottom: 5px;
+  }
+}
+
+.numberedButtonZero {
+  width: 66%;
+  height: 50px;
+}

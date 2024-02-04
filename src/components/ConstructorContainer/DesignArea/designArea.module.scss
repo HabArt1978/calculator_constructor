@@ -1,0 +1,29 @@
+@import '@/sass/variables';
+
+.designArea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed $tw_gray_300;
+  border-radius: 6px;
+  width: 243px;
+  height: 448px;
+}
+
+.instruction {
+  width: 120px;
+  height: max-content;
+  text-align: center;
+
+  h1 {
+    font-size: 12px;
+    font-weight: 400;
+    margin-top: 5px;
+
+    span {
+      font-size: 13px;
+      color: $tw_indigo_500;
+      line-height: 180%;
+    }
+  }
+}
