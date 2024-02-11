@@ -1,19 +1,22 @@
 import React from 'react'
 
-import Display from './Display/Display'
-import MathOperators from './MathOperators/MathOperators'
+import BlockContainer from './BlockContainer/BlockContainer'
+import { blockParams } from '@/library/data'
 
-import styles from '@/components/ConstructorContainer/BuildingBlocks/buildingBlock.module.scss'
-import NumericBlock from './NumericBlock/NumericBlock'
-import EqualButton from './EqualButton/EqualButton'
+import styles from './buildingBlock.module.scss'
 
 export default function BuildingBlocks() {
   return (
     <div className={styles.buildingBlocks}>
-      <Display />
-      <MathOperators />
-      <NumericBlock />
-      <EqualButton />
+      {blockParams.map(params => (
+        <React.Fragment key={params.block.id}>
+          <BlockContainer
+            block={{ id: params.block.id, type: params.block.type }}
+          >
+            {params.children}
+          </BlockContainer>
+        </React.Fragment>
+      ))}
     </div>
   )
 }

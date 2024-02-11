@@ -44,8 +44,8 @@ button {
   &:active {
     border: 2px solid $tw_indigo_400;
     transform: scale(0.95);
-    -webkit-box-shadow: 0px 1px 6px 0px rgba(34, 60, 80, 0.29);
-    -moz-box-shadow: 0px 1px 6px 0px rgba(34, 60, 80, 0.29);
-    box-shadow: 0px 1px 6px 0px rgba(34, 60, 80, 0.29);
+    -webkit-box-shadow: 0px 2px 10px 0px rgba(34, 60, 80, 0.4);
+    -moz-box-shadow: 0px 2px 10px 0px rgba(34, 60, 80, 0.4);
+    box-shadow: 0px 2px 10px 0px rgba(34, 60, 80, 0.4);
   }
 }
