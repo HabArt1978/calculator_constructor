@@ -1,19 +1,19 @@
 import React from 'react'
 
 import BlockContainer from './BlockContainer/BlockContainer'
-import { blockParams } from '@/library/data'
+import { buildingBlocksData } from '@/library/data'
 
 import styles from './buildingBlock.module.scss'
 
 export default function BuildingBlocks() {
   return (
     <div className={styles.buildingBlocks}>
-      {blockParams.map(params => (
-        <React.Fragment key={params.block.id}>
+      {buildingBlocksData.map(blockData => (
+        <React.Fragment key={blockData.block.id}>
           <BlockContainer
-            block={{ id: params.block.id, type: params.block.type }}
+            block={{ id: blockData.block.id, type: blockData.block.type }}
           >
-            {params.children}
+            {blockData.children}
           </BlockContainer>
         </React.Fragment>
       ))}

@@ -2,52 +2,66 @@
 
 import React, { useId } from 'react'
 import { createPortal } from 'react-dom'
-import { useAppDispatch, useAppSelector } from '@/redux/reduxHooks'
-import { setActiveBlock } from '@/redux/app/appSlice'
+import { useAppDispatch } from '@/redux/reduxHooks'
+import { addDesignBlock, setActiveBlock } from '@/redux/app/appSlice'
+import useStateSelectors from '@/redux/app/stateSelectors'
 
-import { DndContext, DragStartEvent, DragOverlay } from '@dnd-kit/core'
+import {
+  DndContext,
+  DragStartEvent,
+  DragOverlay,
+  DragEndEvent,
+} from '@dnd-kit/core'
 import { SortableContext } from '@dnd-kit/sortable'
 
 import BuildingBlocks from './BuildingBlocks/BuildingBlocks'
 import DesignArea from './DesignArea/DesignArea'
 import BlockContainer from './BuildingBlocks/BlockContainer/BlockContainer'
 
-import { blockParams } from '@/library/data'
+import { buildingBlocksData } from '@/library/data'
 
-import type { ActiveBlock } from '@/redux/app/types'
+import type { ActiveBlock, BlockContainerProp } from '@/redux/app/types'
 
 import styles from './constructorContainer.module.scss'
+import { getBlockContainer } from '@/library/utils'
+
+//! === END IMPORT ===
 
 export default function ConstructorContainer() {
-  const activeBlock = useAppSelector(({ appState }) => appState.activeBlock)
+  const { activeBlock, transferredBlockIds } = useStateSelectors()
+
+  if (transferredBlockIds.length !== 0) {
+    console.log('Design Blocks :', transferredBlockIds)
+  }
 
   const dispatch = useAppDispatch()
   const id = useId()
 
-  const blocksId = blockParams.map(block => block.block.id)
+  const blocksIds = buildingBlocksData.map(block => block.block.id)
 
   return (
-    <DndContext onDragStart={onDragStart} id={id}>
+    <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd} id={id}>
       <div className={styles.constructorContainer}>
         <BuildingBlocks />
 
-        <SortableContext items={blocksId}>
+        <SortableContext items={blocksIds}>
           <DesignArea />
         </SortableContext>
       </div>
 
       {typeof window === 'object' &&
+        activeBlock?.id &&
         createPortal(
           <DragOverlay style={{ opacity: 0.8 }}>
-            {getActiveBlockContainer()}
+            {getBlockContainer(activeBlock.id, buildingBlocksData)}
           </DragOverlay>,
           document.body,
         )}
     </DndContext>
   )
 
-  function onDragStart(event: DragStartEvent) {
-    blockParams.forEach(params => {
+  function handleDragStart(event: DragStartEvent) {
+    buildingBlocksData.forEach(params => {
       if (event.active.data.current?.type === params.block.type) {
         const dragBlockId = event.active.id
         const dragBlockType = event.active.data.current.type as string
@@ -64,17 +78,27 @@ export default function ConstructorContainer() {
     return
   }
 
-  function getActiveBlockContainer() {
-    for (const block of blockParams) {
-      if (activeBlock?.id === block.block.id) {
-        return (
-          <BlockContainer
-            block={{ id: activeBlock.id, type: block.block.type }}
-          >
-            {block.children}
-          </BlockContainer>
-        )
+  function handleDragEnd(event: DragEndEvent) {
+    dispatch(setActiveBlock(null))
+
+    const { active, over } = event
+    if (!over) return
+
+    const activeId = active.id
+    const overId = over.id
+
+    let isInvalidDropZoneId = false
+
+    for (const blockId of blocksIds) {
+      if (overId === blockId) {
+        isInvalidDropZoneId = true
       }
     }
+
+    if (isInvalidDropZoneId) return
+
+    console.log('handleDragEnd() :', { ActiveID: activeId, OverID: overId })
+
+    dispatch(addDesignBlock(activeId))
   }
 }

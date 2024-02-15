@@ -1,7 +1,8 @@
 import { AppStateTypes } from './types'
 
-const appState: AppStateTypes = {
+export const appState: AppStateTypes = {
   activeBlock: null,
+  designBlocks: [],
 }
 
 export default appState

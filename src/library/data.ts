@@ -5,9 +5,9 @@ import MathOperators from '@/components/ConstructorContainer/BuildingBlocks/Math
 import NumericBlock from '@/components/ConstructorContainer/BuildingBlocks/NumericBlock/NumericBlock'
 import EqualButton from '@/components/ConstructorContainer/BuildingBlocks/EqualButton/EqualButton'
 
-import type { BlockContainerProp } from '@/components/ConstructorContainer/types'
+import type { BlockContainerProp } from '@/redux/app/types'
 
-export const blockParams: BlockContainerProp[] = [
+export const buildingBlocksData: BlockContainerProp[] = [
   {
     block: {
       id: 'dragDisplayBlock',

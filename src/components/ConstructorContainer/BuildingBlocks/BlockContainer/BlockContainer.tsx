@@ -2,7 +2,7 @@ import React from 'react'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 
-import type { BlockContainerProp } from '../../types'
+import type { BlockContainerProp } from '@/redux/app/types'
 
 import styles from './blocksContainer.module.scss'
 

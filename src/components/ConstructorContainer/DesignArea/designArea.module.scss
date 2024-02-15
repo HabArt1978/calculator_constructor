@@ -6,8 +6,9 @@
   align-items: center;
   border: 2px dashed $tw_gray_300;
   border-radius: 6px;
-  width: 243px;
-  height: 448px;
+  width: 245px;
+  height: 450px;
+  transition: all 250ms;
 }
 
 .instruction {

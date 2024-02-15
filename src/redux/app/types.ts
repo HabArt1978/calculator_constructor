@@ -1,8 +1,19 @@
 export type AppStateTypes = {
   activeBlock: ActiveBlock
+  designBlocks: DesignBlocks
 }
 
-export type ActiveBlock = {
-  id: number | string
+export type ActiveBlock = Block | null
+export type DesignBlocks = BlockId[] | []
+
+export interface BlockContainerProp {
+  block: Block
+  children: React.ReactNode
+}
+
+export interface Block {
+  id: BlockId
   type: string
-} | null
+}
+
+export type BlockId = string | number
