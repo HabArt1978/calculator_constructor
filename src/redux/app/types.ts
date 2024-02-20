@@ -4,7 +4,7 @@ export type AppStateTypes = {
 }
 
 export type ActiveBlock = Block | null
-export type DesignBlocks = BlockId[] | []
+export type DesignBlocks = Block[] | []
 
 export interface BlockContainerProp {
   block: Block

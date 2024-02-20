@@ -6,8 +6,8 @@
   align-items: center;
   border: 2px dashed $tw_gray_300;
   border-radius: 6px;
-  width: 245px;
-  height: 450px;
+  width: 243px;
+  height: 448px;
   transition: all 250ms;
 }
 
@@ -23,8 +23,44 @@
 
     span {
       font-size: 13px;
+      font-weight: 600;
       color: $tw_indigo_500;
       line-height: 180%;
+      -webkit-text-shadow: 0 4px 3px rgba(0, 0, 0, 0.5);
+      -moz-text-shadow: 0 4px 3px rgba(0, 0, 0, 0.5);
+      text-shadow: 0 4px 3px rgba(0, 0, 0, 0.5);
     }
+  }
+}
+
+.designAreaActive {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border: none;
+  border-radius: 6px;
+  width: 243px;
+  height: 448px;
+  transition: all 250ms;
+}
+
+.dropZoneForDisplayBlock {
+  width: 100%;
+  height: 60px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  pointer-events: none;
+}
+
+.dropZoneForOtherBlocks {
+  width: 100%;
+  height: 88%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+  background-color: #dcfce7;
+
+  > div:not(:last-child) {
+    margin-bottom: 9.5px;
   }
 }

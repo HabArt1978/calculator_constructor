@@ -1,35 +1,41 @@
 import React from 'react'
 import { useDroppable } from '@dnd-kit/core'
+import { SortableContext } from '@dnd-kit/sortable'
+import useStateSelectors from '@/redux/app/stateSelectors'
 
-import { buildingBlocksData } from '@/library/data'
+import { buildingBlocksData, blocksIds } from '@/library/data'
+import { getBlockContainerForDesignArea } from '@/library/utils'
 
 import { FcAddImage } from 'react-icons/fc'
 
-import stylesBlockContainer from '../BuildingBlocks/buildingBlock.module.scss'
 import styles from './designArea.module.scss'
-import useStateSelectors from '@/redux/app/stateSelectors'
-import { getBlockContainer } from '@/library/utils'
 
 export default function DesignArea() {
-  const { transferredBlockIds } = useStateSelectors()
+  const { transferredBlocks, activeBlock } = useStateSelectors()
 
   const buildingBlocks = buildingBlocksData.map(blockData => blockData.block)
 
   const { isOver, setNodeRef } = useDroppable({
-    id: 'droppableOne',
+    id: 'dropZone',
     //! TODO
     data: {
       accepts: buildingBlocks.filter(block => block.type !== 'display'),
     },
   })
 
-  return (
-    <div
-      className={styles.designArea}
-      ref={setNodeRef}
-      style={isOver ? { backgroundColor: '#fda4af', border: 'none' } : {}}
-    >
-      {!isOver && (
+  const lightUpTheDisplayDropZone = () =>
+    activeBlock?.type === 'display' && activeBlock ? '#dcfce7' : 'transparent'
+
+  const lightUpTheOtherDropZone = () =>
+    activeBlock?.type !== 'display' && activeBlock ? '#dcfce7' : 'transparent'
+
+  if (transferredBlocks.length === 0 && !isOver)
+    return (
+      <div
+        className={styles.designArea}
+        ref={setNodeRef}
+        style={activeBlock ? { backgroundColor: '#f0f9ff' } : {}}
+      >
         <div className={styles.instruction}>
           <FcAddImage size={30} />
           <h1>
@@ -40,22 +46,46 @@ export default function DesignArea() {
             из левой панели
           </h1>
         </div>
-      )}
+      </div>
+    )
 
-      {isOver && <div className={stylesBlockContainer.blockContainer} />}
+  return (
+    <div className={styles.designAreaActive} ref={setNodeRef}>
+      <div style={{ cursor: 'not-allowed' }}>
+        <div
+          className={styles.dropZoneForDisplayBlock}
+          style={{
+            backgroundColor: lightUpTheDisplayDropZone(),
+          }}
+        >
+          {transferredBlocks.map(
+            block =>
+              block.type === 'display' && (
+                <div key={block.id}>
+                  {getBlockContainerForDesignArea(block.id)}
+                </div>
+              ),
+          )}
+        </div>
+      </div>
 
-      {transferredBlockIds.length !== 0 &&
-        transferredBlockIds.map(id => {
-          for (const block of buildingBlocks) {
-            if (id === block.id) {
-              return (
+      <SortableContext items={blocksIds}>
+        <div
+          className={styles.dropZoneForOtherBlocks}
+          style={{
+            backgroundColor: lightUpTheOtherDropZone(),
+          }}
+        >
+          {transferredBlocks.map(
+            block =>
+              block.type !== 'display' && (
                 <React.Fragment key={block.id}>
-                  {getBlockContainer(block.id, buildingBlocksData)}
+                  {getBlockContainerForDesignArea(block.id)}
                 </React.Fragment>
-              )
-            }
-          }
-        })}
+              ),
+          )}
+        </div>
+      </SortableContext>
     </div>
   )
 }

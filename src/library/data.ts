@@ -28,3 +28,5 @@ export const buildingBlocksData: BlockContainerProp[] = [
     children: React.createElement(EqualButton),
   },
 ]
+
+export const blocksIds = buildingBlocksData.map(block => block.block.id)

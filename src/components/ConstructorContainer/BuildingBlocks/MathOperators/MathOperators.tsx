@@ -16,12 +16,12 @@ const mathOperatorsIcon = [
 
 export default function MathOperators() {
   return (
-    <div className={styles.mathOperatorsContainer}>
+    <>
       {mathOperatorsIcon.map((operator, idx) => (
-        <React.Fragment key={idx}>
-          <button className={styles.operatorButton}>{operator.icon}</button>
-        </React.Fragment>
+        <button className={styles.operatorButton} key={idx}>
+          {operator.icon}
+        </button>
       ))}
-    </div>
+    </>
   )
 }

@@ -12,48 +12,38 @@ import {
   DragOverlay,
   DragEndEvent,
 } from '@dnd-kit/core'
-import { SortableContext } from '@dnd-kit/sortable'
 
 import BuildingBlocks from './BuildingBlocks/BuildingBlocks'
 import DesignArea from './DesignArea/DesignArea'
-import BlockContainer from './BuildingBlocks/BlockContainer/BlockContainer'
 
-import { buildingBlocksData } from '@/library/data'
+import { buildingBlocksData, blocksIds } from '@/library/data'
+import { getBlockContainerForBuildingBlocks } from '@/library/utils'
 
-import type { ActiveBlock, BlockContainerProp } from '@/redux/app/types'
+import type { ActiveBlock, Block } from '@/redux/app/types'
 
 import styles from './constructorContainer.module.scss'
-import { getBlockContainer } from '@/library/utils'
 
 //! === END IMPORT ===
 
 export default function ConstructorContainer() {
-  const { activeBlock, transferredBlockIds } = useStateSelectors()
-
-  if (transferredBlockIds.length !== 0) {
-    console.log('Design Blocks :', transferredBlockIds)
-  }
+  const { activeBlock, transferredBlocks } = useStateSelectors()
 
   const dispatch = useAppDispatch()
   const id = useId()
-
-  const blocksIds = buildingBlocksData.map(block => block.block.id)
 
   return (
     <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd} id={id}>
       <div className={styles.constructorContainer}>
         <BuildingBlocks />
 
-        <SortableContext items={blocksIds}>
-          <DesignArea />
-        </SortableContext>
+        <DesignArea />
       </div>
 
       {typeof window === 'object' &&
         activeBlock?.id &&
         createPortal(
           <DragOverlay style={{ opacity: 0.8 }}>
-            {getBlockContainer(activeBlock.id, buildingBlocksData)}
+            {getBlockContainerForBuildingBlocks(activeBlock.id)}
           </DragOverlay>,
           document.body,
         )}
@@ -85,6 +75,7 @@ export default function ConstructorContainer() {
     if (!over) return
 
     const activeId = active.id
+    const activeType = active.data.current?.type
     const overId = over.id
 
     let isInvalidDropZoneId = false
@@ -97,8 +88,11 @@ export default function ConstructorContainer() {
 
     if (isInvalidDropZoneId) return
 
-    console.log('handleDragEnd() :', { ActiveID: activeId, OverID: overId })
+    const droppableBlock: Block = {
+      id: activeId,
+      type: activeType,
+    }
 
-    dispatch(addDesignBlock(activeId))
+    dispatch(addDesignBlock(droppableBlock))
   }
 }

@@ -3,13 +3,30 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  background-color: inherit;
   border-radius: 6px;
   -webkit-box-shadow: 0px 3px 6px 0px rgba(34, 60, 80, 0.15);
   -moz-box-shadow: 0px 3px 6px 0px rgba(34, 60, 80, 0.15);
   box-shadow: 0px 3px 6px 0px rgba(34, 60, 80, 0.15);
   background-color: white;
   cursor: move;
+}
+
+.blockContainerDisabled {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border-radius: 6px;
+  background-color: white;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.unitInnerContainer {
+  display: flex;
+  width: 100%;
+  padding: 5px;
+  border-radius: 6px;
 
   button {
     pointer-events: none;
