@@ -23,10 +23,8 @@ import type { ActiveBlock, Block } from '@/redux/app/types'
 
 import styles from './constructorContainer.module.scss'
 
-//! === END IMPORT ===
-
 export default function ConstructorContainer() {
-  const { activeBlock, transferredBlocks } = useStateSelectors()
+  const { activeBlock } = useStateSelectors()
 
   const dispatch = useAppDispatch()
   const id = useId()
@@ -64,8 +62,6 @@ export default function ConstructorContainer() {
         dispatch(setActiveBlock(activeDragBlock))
       }
     })
-
-    return
   }
 
   function handleDragEnd(event: DragEndEvent) {

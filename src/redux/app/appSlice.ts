@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import appState from './initialState'
 
-import { ActiveBlock, AppStateTypes, Block, BlockId } from './types'
+import { ActiveBlock, Block } from './types'
 
 export const appSlice = createSlice({
   name: 'appSlice',
@@ -18,8 +18,13 @@ export const appSlice = createSlice({
 
       state.designBlocks = updatedDesignBlock
     },
+
+    setDesignBlocks: (state, action: PayloadAction<Block[]>) => {
+      state.designBlocks = action.payload
+    },
   },
 })
 
-export const { setActiveBlock, addDesignBlock } = appSlice.actions
+export const { setActiveBlock, addDesignBlock, setDesignBlocks } =
+  appSlice.actions
 export default appSlice.reducer

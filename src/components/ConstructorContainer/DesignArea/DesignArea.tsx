@@ -1,26 +1,34 @@
-import React from 'react'
-import { useDroppable } from '@dnd-kit/core'
-import { SortableContext } from '@dnd-kit/sortable'
+import React, { useId } from 'react'
+import { setDesignBlocks } from '@/redux/app/appSlice'
+import { useAppDispatch } from '@/redux/reduxHooks'
 import useStateSelectors from '@/redux/app/stateSelectors'
 
-import { buildingBlocksData, blocksIds } from '@/library/data'
+import {
+  DndContext,
+  DragEndEvent,
+  closestCenter,
+  useDroppable,
+} from '@dnd-kit/core'
+import {
+  SortableContext,
+  arrayMove,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable'
+
+import { blocksIds } from '@/library/data'
 import { getBlockContainerForDesignArea } from '@/library/utils'
 
 import { FcAddImage } from 'react-icons/fc'
-
 import styles from './designArea.module.scss'
 
 export default function DesignArea() {
   const { transferredBlocks, activeBlock } = useStateSelectors()
 
-  const buildingBlocks = buildingBlocksData.map(blockData => blockData.block)
+  const dispatch = useAppDispatch()
+  const id = useId()
 
   const { isOver, setNodeRef } = useDroppable({
     id: 'dropZone',
-    //! TODO
-    data: {
-      accepts: buildingBlocks.filter(block => block.type !== 'display'),
-    },
   })
 
   const lightUpTheDisplayDropZone = () =>
@@ -69,23 +77,51 @@ export default function DesignArea() {
         </div>
       </div>
 
-      <SortableContext items={blocksIds}>
-        <div
-          className={styles.dropZoneForOtherBlocks}
-          style={{
-            backgroundColor: lightUpTheOtherDropZone(),
-          }}
+      <DndContext
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+        id={id}
+      >
+        <SortableContext
+          items={blocksIds}
+          strategy={verticalListSortingStrategy}
         >
-          {transferredBlocks.map(
-            block =>
-              block.type !== 'display' && (
-                <React.Fragment key={block.id}>
-                  {getBlockContainerForDesignArea(block.id)}
-                </React.Fragment>
-              ),
-          )}
-        </div>
-      </SortableContext>
+          <div
+            className={styles.dropZoneForOtherBlocks}
+            style={{
+              backgroundColor: lightUpTheOtherDropZone(),
+            }}
+          >
+            {transferredBlocks.map(
+              block =>
+                block.type !== 'display' && (
+                  <React.Fragment key={block.id}>
+                    {getBlockContainerForDesignArea(block.id)}
+                  </React.Fragment>
+                ),
+            )}
+          </div>
+        </SortableContext>
+      </DndContext>
     </div>
   )
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event
+    if (!over) return
+
+    const activeId = active.id
+    const overId = over.id
+
+    const oldIndex = transferredBlocks.findIndex(block => block.id === activeId)
+    const newIndex = transferredBlocks.findIndex(block => block.id === overId)
+
+    const sortedTransferredBlocks = arrayMove(
+      transferredBlocks,
+      oldIndex,
+      newIndex,
+    )
+
+    dispatch(setDesignBlocks(sortedTransferredBlocks))
+  }
 }
