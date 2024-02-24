@@ -1,6 +1,5 @@
 import React from 'react'
 import { useSortable } from '@dnd-kit/sortable'
-import { CSS } from '@dnd-kit/utilities'
 
 import type { BlockContainerProp } from '@/redux/app/types'
 
@@ -10,24 +9,23 @@ export default function BlockContainerForDesignArea({
   block,
   children,
 }: BlockContainerProp) {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({
-      id: block.id,
-      data: {
-        type: block.type,
-        block,
-      },
-    })
+  const { attributes, listeners, setNodeRef, isOver } = useSortable({
+    id: block.id,
+    data: {
+      type: block.type,
+      block,
+    },
+  })
+
   const style = {
-    transition,
-    transform: CSS.Translate.toString(transform),
+    backgroundColor: isOver ? '#fda4af' : '',
   }
 
   return (
     <div
       className={styles.blockContainerForDesignArea}
-      ref={setNodeRef}
       style={style}
+      ref={setNodeRef}
       {...listeners}
       {...attributes}
     >
