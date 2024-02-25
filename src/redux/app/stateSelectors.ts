@@ -5,9 +5,13 @@ export default function useStateSelectors() {
   const transferredBlocks = useAppSelector(
     ({ appState }) => appState.designBlocks,
   )
+  const droppableBlockPosition = useAppSelector(
+    ({ appState }) => appState.droppableBlockPosition,
+  )
 
   return {
     activeBlock,
     transferredBlocks,
+    droppableBlockPosition,
   }
 }

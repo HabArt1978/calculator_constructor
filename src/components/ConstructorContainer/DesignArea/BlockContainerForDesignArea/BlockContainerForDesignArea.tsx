@@ -4,11 +4,15 @@ import { useSortable } from '@dnd-kit/sortable'
 import type { BlockContainerProp } from '@/redux/app/types'
 
 import styles from '@/components/ConstructorContainer/DesignArea/BlockContainerForDesignArea/blockContainerForDesignArea.module.scss'
+import BlockDropPositionIndicator from '../BlockDropPositionIndicator/BlockDropPositionIndicator'
+import useStateSelectors from '@/redux/app/stateSelectors'
 
 export default function BlockContainerForDesignArea({
   block,
   children,
 }: BlockContainerProp) {
+  const { droppableBlockPosition } = useStateSelectors()
+
   const { attributes, listeners, setNodeRef, isOver } = useSortable({
     id: block.id,
     data: {
@@ -17,18 +21,15 @@ export default function BlockContainerForDesignArea({
     },
   })
 
-  const style = {
-    backgroundColor: isOver ? '#fda4af' : '',
-  }
-
   return (
     <div
       className={styles.blockContainerForDesignArea}
-      style={style}
       ref={setNodeRef}
       {...listeners}
       {...attributes}
     >
+      {isOver && <BlockDropPositionIndicator />}
+
       <div
         className={styles.unitInnerContainerForDesignArea}
         style={

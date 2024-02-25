@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import appState from './initialState'
 
-import { ActiveBlock, Block } from './types'
+import { ActiveBlock, Block, DroppableBlockPosition } from './types'
 
 export const appSlice = createSlice({
   name: 'appSlice',
@@ -22,9 +22,20 @@ export const appSlice = createSlice({
     setDesignBlocks: (state, action: PayloadAction<Block[]>) => {
       state.designBlocks = action.payload
     },
+
+    setDroppableBlockPosition: (
+      state,
+      action: PayloadAction<DroppableBlockPosition>,
+    ) => {
+      state.droppableBlockPosition = action.payload
+    },
   },
 })
 
-export const { setActiveBlock, addDesignBlock, setDesignBlocks } =
-  appSlice.actions
+export const {
+  setActiveBlock,
+  addDesignBlock,
+  setDesignBlocks,
+  setDroppableBlockPosition,
+} = appSlice.actions
 export default appSlice.reducer

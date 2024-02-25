@@ -1,6 +1,7 @@
-import BlockContainer from '@/components/ConstructorContainer/BuildingBlocks/BlockContainer/BlockContainer'
-
 import { buildingBlocksData } from './data'
+import { ActiveBlock } from '@/redux/app/types'
+
+import BlockContainer from '@/components/ConstructorContainer/BuildingBlocks/BlockContainer/BlockContainer'
 import BlockContainerForDesignArea from '@/components/ConstructorContainer/DesignArea/BlockContainerForDesignArea/BlockContainerForDesignArea'
 
 export function getBlockContainerForBuildingBlocks(
@@ -36,3 +37,9 @@ export function getBlockContainerForDesignArea(activeBlockId: string | number) {
     }
   }
 }
+
+export const lightUpTheDisplayDropZone = (activeBlock: ActiveBlock) =>
+  activeBlock?.type === 'display' && activeBlock ? '#dcfce7' : 'transparent'
+
+export const lightUpTheOtherDropZone = (activeBlock: ActiveBlock) =>
+  activeBlock?.type !== 'display' && activeBlock ? '#dcfce7' : 'transparent'
