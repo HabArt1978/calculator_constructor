@@ -4,10 +4,18 @@ import BlockContainer from './BlockContainer/BlockContainer'
 import { buildingBlocksData } from '@/library/data'
 
 import styles from './buildingBlock.module.scss'
+import useStateSelectors from '@/redux/app/stateSelectors'
 
 export default function BuildingBlocks() {
+  const { activeStatus } = useStateSelectors()
+
+  const isHiddenBlock = activeStatus === 'runtime'
+
   return (
-    <div className={styles.buildingBlocks}>
+    <div
+      className={styles.buildingBlocks}
+      style={isHiddenBlock ? { display: 'none' } : {}}
+    >
       {buildingBlocksData.map(blockData => (
         <React.Fragment key={blockData.block.id}>
           <BlockContainer

@@ -24,14 +24,17 @@ import type { ActiveBlock, Block } from '@/redux/app/types'
 import styles from './constructorContainer.module.scss'
 
 export default function ConstructorContainer() {
-  const { activeBlock } = useStateSelectors()
+  const { activeBlock, activeStatus } = useStateSelectors()
 
   const dispatch = useAppDispatch()
   const id = useId()
 
   return (
     <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd} id={id}>
-      <div className={styles.constructorContainer}>
+      <div
+        className={styles.constructorContainer}
+        style={activeStatus === 'runtime' ? { justifyContent: 'center' } : {}}
+      >
         <BuildingBlocks />
 
         <DesignArea />

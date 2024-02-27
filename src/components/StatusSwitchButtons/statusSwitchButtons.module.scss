@@ -2,7 +2,7 @@
 
 .statusSwitchButtons {
   display: flex;
-  align-self: end;
+  align-self: center;
   width: 243px;
   height: 38px;
   top: 20px;
@@ -19,32 +19,53 @@
     font-weight: 600;
     font-size: 14px;
     padding: 5px;
-    border: none;
+    border: 2px solid transparent;
     border-radius: 5px;
     background-color: inherit;
     transition: all 500ms;
 
     & span {
       color: $tw_gray_600;
+      transition: all 500ms;
     }
 
     &.runtimeBtn {
       width: 45%;
+
+      &--active {
+        width: 45%;
+        border: 2px solid $tw_gray_300;
+        background-color: white;
+        transform: none;
+        box-shadow: none;
+
+        & span {
+          color: $tw_indigo_500;
+        }
+      }
     }
 
     &.constructorBtn {
       width: 55%;
+
+      &--active {
+        width: 55%;
+        border: 2px solid $tw_gray_300;
+        background-color: white;
+        transform: none;
+        box-shadow: none;
+
+        & span {
+          color: $tw_indigo_500;
+        }
+      }
     }
 
     &:hover {
-      background-color: white;
-      border: none;
       transform: none;
     }
 
     &:active {
-      background-color: white;
-      border: none;
       transform: none;
       box-shadow: none;
     }

@@ -2,6 +2,7 @@ export type AppStateTypes = {
   activeBlock: ActiveBlock
   designBlocks: DesignBlocks
   droppableBlockPosition: DroppableBlockPosition
+  activeStatus: ActiveStatus
 }
 
 export type ActiveBlock = Block | null
@@ -20,3 +21,5 @@ export interface Block {
 export type BlockId = string | number
 
 export type DroppableBlockPosition = 'top' | 'bottom' | null
+
+export type ActiveStatus = 'runtime' | 'constructor'
