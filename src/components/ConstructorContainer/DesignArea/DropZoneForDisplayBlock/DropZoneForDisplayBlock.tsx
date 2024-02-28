@@ -9,10 +9,16 @@ import {
 import styles from './dropZoneForDisplayBlock.module.scss'
 
 export default function DropZoneForDisplayBlock() {
-  const { transferredBlocks, activeBlock } = useStateSelectors()
+  const { transferredBlocks, activeBlock, activeStatus } = useStateSelectors()
 
   return (
-    <div style={{ cursor: 'not-allowed' }}>
+    <div
+      style={
+        activeStatus === 'runtime'
+          ? { cursor: 'pointer' }
+          : { cursor: 'not-allowed' }
+      }
+    >
       <div
         className={styles.dropZoneForDisplayBlock}
         style={{

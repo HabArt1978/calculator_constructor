@@ -11,7 +11,7 @@ export default function BlockContainerForDesignArea({
   block,
   children,
 }: BlockContainerProp) {
-  const { droppableBlockPosition } = useStateSelectors()
+  const { activeStatus } = useStateSelectors()
 
   const { attributes, listeners, setNodeRef, isOver } = useSortable({
     id: block.id,
@@ -21,17 +21,28 @@ export default function BlockContainerForDesignArea({
     },
   })
 
+  const blockContainerStyles = [
+    styles.blockContainerForDesignArea,
+    activeStatus === 'runtime' && styles['blockContainerForDesignArea--active'],
+  ]
+
+  const unitInnerContainerStyles = [
+    styles.unitInnerContainerForDesignArea,
+    activeStatus === 'runtime' &&
+      styles['unitInnerContainerForDesignArea--active'],
+  ]
+
   return (
     <div
-      className={styles.blockContainerForDesignArea}
-      ref={setNodeRef}
+      className={blockContainerStyles.join(' ')}
+      ref={activeStatus === 'constructor' ? setNodeRef : undefined}
       {...listeners}
       {...attributes}
     >
       {isOver && <BlockDropPositionIndicator />}
 
       <div
-        className={styles.unitInnerContainerForDesignArea}
+        className={unitInnerContainerStyles.join(' ')}
         style={
           block.type === ('display' || 'equal')
             ? { justifyContent: 'center', alignItems: 'center' }

@@ -7,6 +7,10 @@
   border-radius: 6px;
   background-color: inherit;
   cursor: move;
+
+  &--active {
+    cursor: auto;
+  }
 }
 
 .unitInnerContainerForDesignArea {
@@ -17,5 +21,11 @@
 
   button {
     pointer-events: none;
+  }
+
+  &--active {
+    button {
+      pointer-events: all;
+    }
   }
 }

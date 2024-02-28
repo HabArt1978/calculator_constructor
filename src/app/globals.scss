@@ -34,6 +34,7 @@ button {
   border: 1px solid $tw_gray_200;
   background-color: white;
   border-radius: 5px;
+  user-select: none;
   cursor: pointer;
   transition: all 50ms;
 
