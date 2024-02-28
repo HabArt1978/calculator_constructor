@@ -1,0 +1,90 @@
+.backdrop {
+  width: 100%;
+  min-height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  position: fixed;
+  top: 0px;
+  z-index: 10;
+
+  animation: animationAlertMessageBackdrop 5s ease-in alternate both;
+}
+
+.alertContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin: 300px auto 0px auto;
+  width: 400px;
+  height: 100px;
+  padding: 10px;
+  background-color: #ffedd5;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px #000;
+
+  animation: animationForAlertMessage 5s ease-in-out alternate both;
+
+  .alertHeader {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .alertHearerText {
+      line-height: 0;
+      margin-left: 10px;
+      color: #78350f;
+      font-weight: 700;
+    }
+  }
+
+  .alertMessage {
+    margin-top: 5px;
+    text-align: center;
+    color: #78350f;
+    font-size: 14px;
+  }
+}
+
+@keyframes animationForAlertMessage {
+  from {
+    margin: -120px auto 0px auto;
+  }
+
+  8% {
+    margin: 330px auto 0px auto;
+  }
+
+  13% {
+    margin: 300px auto 0px auto;
+  }
+
+  87% {
+    margin: 300px auto 0px auto;
+  }
+
+  92% {
+    margin: 330px auto 0px auto;
+  }
+
+  to {
+    margin: -120px auto 0px auto;
+  }
+}
+
+@keyframes animationAlertMessageBackdrop {
+  from {
+    opacity: 0;
+  }
+
+  8% {
+    opacity: 1;
+  }
+
+  92% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}

@@ -1,6 +1,9 @@
 import { ReduxProvider } from '@/redux/ReduxProvider'
 
+import AlertPopUp from '@/components/AlertPopUp/AlertPopUp'
+
 import type { Metadata } from 'next'
+
 import { Inter } from 'next/font/google'
 import './globals.scss'
 
@@ -20,7 +23,10 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <ReduxProvider>
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <AlertPopUp />
+          {children}
+        </body>
       </ReduxProvider>
     </html>
   )

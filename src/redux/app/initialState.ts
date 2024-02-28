@@ -5,6 +5,7 @@ export const appState: AppStateTypes = {
   designBlocks: [],
   droppableBlockPosition: null,
   activeStatus: 'constructor',
+  isAlertVisible: false,
 }
 
 export default appState

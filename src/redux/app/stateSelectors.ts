@@ -2,6 +2,7 @@ import { useAppSelector } from '../reduxHooks'
 
 export default function useStateSelectors() {
   const activeBlock = useAppSelector(({ appState }) => appState.activeBlock)
+
   const transferredBlocks = useAppSelector(
     ({ appState }) => appState.designBlocks,
   )
@@ -11,10 +12,15 @@ export default function useStateSelectors() {
 
   const activeStatus = useAppSelector(({ appState }) => appState.activeStatus)
 
+  const isAlertVisible = useAppSelector(
+    ({ appState }) => appState.isAlertVisible,
+  )
+
   return {
     activeBlock,
     transferredBlocks,
     droppableBlockPosition,
     activeStatus,
+    isAlertVisible,
   }
 }

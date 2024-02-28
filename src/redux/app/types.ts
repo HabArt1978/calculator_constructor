@@ -3,6 +3,7 @@ export type AppStateTypes = {
   designBlocks: DesignBlocks
   droppableBlockPosition: DroppableBlockPosition
   activeStatus: ActiveStatus
+  isAlertVisible: AlertVisible
 }
 
 export type ActiveBlock = Block | null
@@ -23,3 +24,5 @@ export type BlockId = string | number
 export type DroppableBlockPosition = 'top' | 'bottom' | null
 
 export type ActiveStatus = 'runtime' | 'constructor'
+
+export type AlertVisible = boolean

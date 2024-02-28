@@ -4,11 +4,12 @@ import appState from './initialState'
 import type {
   ActiveBlock,
   ActiveStatus,
+  AlertVisible,
   Block,
   DroppableBlockPosition,
 } from './types'
 
-import type { PayloadAction } from '@reduxjs/toolkit'
+import type { Action, PayloadAction } from '@reduxjs/toolkit'
 
 export const appSlice = createSlice({
   name: 'appSlice',
@@ -39,6 +40,10 @@ export const appSlice = createSlice({
     setActiveStatus: (state, action: PayloadAction<ActiveStatus>) => {
       state.activeStatus = action.payload
     },
+
+    setIsAlertVisible: (state, action: PayloadAction<AlertVisible>) => {
+      state.isAlertVisible = action.payload
+    },
   },
 })
 
@@ -48,5 +53,6 @@ export const {
   setDesignBlocks,
   setDroppableBlockPosition,
   setActiveStatus,
+  setIsAlertVisible,
 } = appSlice.actions
 export default appSlice.reducer

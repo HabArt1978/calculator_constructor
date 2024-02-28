@@ -22,11 +22,11 @@
     border: 2px solid transparent;
     border-radius: 5px;
     background-color: inherit;
-    transition: all 500ms;
+    transition: all 250ms;
 
     & span {
       color: $tw_gray_600;
-      transition: all 500ms;
+      transition: all 250ms;
     }
 
     &.runtimeBtn {

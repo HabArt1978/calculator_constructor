@@ -3,7 +3,7 @@
 import React from 'react'
 import useStateSelectors from '@/redux/app/stateSelectors'
 import { useAppDispatch } from '@/redux/reduxHooks'
-import { setActiveStatus } from '@/redux/app/appSlice'
+import { setActiveStatus, setIsAlertVisible } from '@/redux/app/appSlice'
 
 import { MdOutlineRemoveRedEye } from 'react-icons/md'
 import { PiBracketsAngleBold } from 'react-icons/pi'
@@ -11,9 +11,11 @@ import { PiBracketsAngleBold } from 'react-icons/pi'
 import styles from '@/components/statusSwitchButtons/statusSwitchButtons.module.scss'
 
 export default function StatusSwitch() {
-  const { activeStatus } = useStateSelectors()
+  const { activeStatus, transferredBlocks } = useStateSelectors()
 
   const dispatch = useAppDispatch()
+
+  const isDesignIncomplete = transferredBlocks.length < 4
 
   return (
     <div className={styles.statusSwitchButtons}>
@@ -43,6 +45,14 @@ export default function StatusSwitch() {
 
   function handleClickRuntimeButton() {
     if (activeStatus === 'runtime') {
+      return
+    }
+
+    if (isDesignIncomplete) {
+      dispatch(setIsAlertVisible(true))
+      setTimeout(() => {
+        dispatch(setIsAlertVisible(false))
+      }, 5000)
       return
     }
 
