@@ -15,7 +15,7 @@ export default function DropZoneForDisplayBlock() {
     <div
       style={
         activeStatus === 'runtime'
-          ? { cursor: 'pointer' }
+          ? { cursor: 'auto' }
           : { cursor: 'not-allowed' }
       }
     >

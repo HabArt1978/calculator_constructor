@@ -29,12 +29,13 @@ import {
   lightUpTheOtherDropZone,
 } from '@/library/utils'
 
+import InstructionForDesignBlock from './InstructionForDesignBlock/InstructionForDesignBlock'
+import DropZoneForDisplayBlock from './DropZoneForDisplayBlock/DropZoneForDisplayBlock'
+
 import type { ActiveBlock, DroppableBlockPosition } from '@/redux/app/types'
 
 import styles from './designArea.module.scss'
 import blockStyles from '../BuildingBlocks/BlockContainer/blocksContainer.module.scss'
-import InstructionForDesignBlock from './InstructionForDesignBlock/InstructionForDesignBlock'
-import DropZoneForDisplayBlock from './DropZoneForDisplayBlock/DropZoneForDisplayBlock'
 
 export default function DesignArea() {
   const { transferredBlocks, activeBlock } = useStateSelectors()

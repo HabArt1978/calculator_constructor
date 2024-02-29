@@ -7,6 +7,7 @@ import { setActiveStatus, setIsAlertVisible } from '@/redux/app/appSlice'
 
 import { MdOutlineRemoveRedEye } from 'react-icons/md'
 import { PiBracketsAngleBold } from 'react-icons/pi'
+import { MdDeleteForever } from 'react-icons/md'
 
 import styles from '@/components/statusSwitchButtons/statusSwitchButtons.module.scss'
 
@@ -17,34 +18,51 @@ export default function StatusSwitch() {
 
   const isDesignIncomplete = transferredBlocks.length < 4
 
+  const isNoBlocksMoved = transferredBlocks.length === 0
+
+  const isStatusRuntime = activeStatus === 'runtime'
+
+  const isStatusConstructor = activeStatus === 'constructor'
+
+  const isShowDeleteButton = isNoBlocksMoved || isStatusRuntime
+
   return (
-    <div className={styles.statusSwitchButtons}>
-      <button
-        className={setStylesRuntimeButton().baseStyle}
-        onClick={handleClickRuntimeButton}
-      >
-        <MdOutlineRemoveRedEye
-          size="22px"
-          color={setStylesRuntimeButton()?.iconColor}
-        />
-        <span>Runtime</span>
-      </button>
+    <div className={styles.containerForStatusButtons}>
+      <div className={styles.statusSwitchButtons}>
+        <button
+          className={setStylesRuntimeButton().baseStyle}
+          onClick={handleClickRuntimeButton}
+        >
+          <MdOutlineRemoveRedEye
+            size="22px"
+            color={setStylesRuntimeButton()?.iconColor}
+          />
+          <span>Runtime</span>
+        </button>
+
+        <button
+          className={setStylesConstructorButton().baseStyle}
+          onClick={handleClickConstructorButton}
+        >
+          <PiBracketsAngleBold
+            size="18px"
+            color={setStylesConstructorButton()?.iconColor}
+          />
+          <span>Constructor</span>
+        </button>
+      </div>
 
       <button
-        className={setStylesConstructorButton().baseStyle}
-        onClick={handleClickConstructorButton}
+        className={styles.deleteButton}
+        style={isShowDeleteButton ? { display: 'none' } : {}}
       >
-        <PiBracketsAngleBold
-          size="18px"
-          color={setStylesConstructorButton()?.iconColor}
-        />
-        <span>Constructor</span>
+        <MdDeleteForever size={30} color="#ef4444" />
       </button>
     </div>
   )
 
   function handleClickRuntimeButton() {
-    if (activeStatus === 'runtime') {
+    if (isStatusRuntime) {
       return
     }
 
@@ -60,7 +78,7 @@ export default function StatusSwitch() {
   }
 
   function handleClickConstructorButton() {
-    if (activeStatus === 'constructor') {
+    if (isStatusConstructor) {
       return
     }
 
@@ -68,7 +86,7 @@ export default function StatusSwitch() {
   }
 
   function setStylesRuntimeButton() {
-    if (activeStatus === 'runtime') {
+    if (isStatusRuntime) {
       return {
         baseStyle: styles['runtimeBtn--active'],
         iconColor: '#6366f1',
@@ -82,7 +100,7 @@ export default function StatusSwitch() {
   }
 
   function setStylesConstructorButton() {
-    if (activeStatus === 'constructor') {
+    if (isStatusConstructor) {
       return {
         baseStyle: styles['constructorBtn--active'],
         iconColor: '#6366f1',

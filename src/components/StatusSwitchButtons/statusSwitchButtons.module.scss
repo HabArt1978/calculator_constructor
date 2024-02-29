@@ -1,72 +1,99 @@
 @import '@/sass/variables';
 
-.statusSwitchButtons {
+.containerForStatusButtons {
+  position: relative;
   display: flex;
-  align-self: center;
-  width: 243px;
-  height: 38px;
-  top: 20px;
-  left: 20px;
-  padding: 2px;
-  border-radius: 6px;
-  background-color: $tw_gray_100;
+  justify-content: center;
+  width: 100%;
 
-  button {
+  .statusSwitchButtons {
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    height: 100%;
-    font-weight: 600;
-    font-size: 14px;
-    padding: 5px;
-    border: 2px solid transparent;
-    border-radius: 5px;
-    background-color: inherit;
-    transition: all 250ms;
+    align-self: center;
+    width: 243px;
+    height: 38px;
+    top: 20px;
+    left: 20px;
+    padding: 2px;
+    border-radius: 6px;
+    background-color: $tw_gray_100;
 
-    & span {
-      color: $tw_gray_600;
+    button {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      height: 100%;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 5px;
+      border: 2px solid transparent;
+      border-radius: 5px;
+      background-color: inherit;
       transition: all 250ms;
-    }
 
-    &.runtimeBtn {
-      width: 45%;
+      & span {
+        color: $tw_gray_600;
+        transition: all 250ms;
+      }
 
-      &--active {
+      &.runtimeBtn {
         width: 45%;
-        border: 2px solid $tw_gray_300;
-        background-color: white;
-        transform: none;
-        box-shadow: none;
 
-        & span {
-          color: $tw_indigo_500;
+        &--active {
+          width: 45%;
+          border: 2px solid $tw_gray_300;
+          background-color: white;
+          transform: none;
+          box-shadow: none;
+
+          & span {
+            color: $tw_indigo_500;
+          }
         }
       }
-    }
 
-    &.constructorBtn {
-      width: 55%;
-
-      &--active {
+      &.constructorBtn {
         width: 55%;
-        border: 2px solid $tw_gray_300;
-        background-color: white;
-        transform: none;
-        box-shadow: none;
 
-        & span {
-          color: $tw_indigo_500;
+        &--active {
+          width: 55%;
+          border: 2px solid $tw_gray_300;
+          background-color: white;
+          transform: none;
+          box-shadow: none;
+
+          & span {
+            color: $tw_indigo_500;
+          }
         }
       }
-    }
 
-    &:hover {
-      transform: none;
+      &:hover {
+        transform: none;
+      }
+
+      &:active {
+        transform: none;
+        box-shadow: none;
+      }
     }
+  }
+
+  .deleteButton {
+    position: absolute;
+    top: 50%;
+    transform: translate(5px, -50%);
+    right: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: none;
+    z-index: 50;
+    pointer-events: all;
+    transition: background-color 250ms;
 
     &:active {
-      transform: none;
+      background-color: #f3f4f6;
       box-shadow: none;
     }
   }
