@@ -6,7 +6,6 @@ import { useAppDispatch } from '@/redux/reduxHooks'
 import {
   setActiveStatus,
   deleteDesignBlocks,
-  setIsAlertVisible,
   setActiveBlock,
 } from '@/redux/app/appSlice'
 
@@ -15,11 +14,14 @@ import { PiBracketsAngleBold } from 'react-icons/pi'
 import { MdDeleteForever } from 'react-icons/md'
 
 import styles from '@/components/statusSwitchButtons/statusSwitchButtons.module.scss'
+import useAlert from '@/hooks/useAlert'
 
 export default function StatusSwitch() {
   const { activeStatus, transferredBlocks } = useStateSelectors()
 
   const dispatch = useAppDispatch()
+
+  const { showFor: showAlertFor } = useAlert()
 
   const isDesignIncomplete = transferredBlocks.length < 4
 
@@ -62,7 +64,7 @@ export default function StatusSwitch() {
         style={isShowDeleteButton ? { display: 'none' } : {}}
         onClick={deleteDesignAreaBlocks}
       >
-        <MdDeleteForever size={30} color="#ef4444" />
+        <MdDeleteForever size={30} color="inherit" />
       </button>
     </div>
   )
@@ -73,11 +75,7 @@ export default function StatusSwitch() {
     }
 
     if (isDesignIncomplete) {
-      dispatch(setIsAlertVisible(true))
-      setTimeout(() => {
-        dispatch(setIsAlertVisible(false))
-      }, 5000)
-      return
+      return showAlertFor(5)
     }
 
     dispatch(setActiveStatus('runtime'))

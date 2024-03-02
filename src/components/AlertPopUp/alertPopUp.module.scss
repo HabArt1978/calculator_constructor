@@ -1,3 +1,5 @@
+@import "~/src/sass/variables.scss";
+
 .backdrop {
   width: 100%;
   min-height: 100%;
@@ -15,12 +17,12 @@
   flex-direction: column;
   justify-content: space-evenly;
   margin: 300px auto 0px auto;
-  width: 400px;
-  height: 100px;
-  padding: 10px;
-  background-color: #ffedd5;
+  max-width: 400px;
+  min-height: 100px;
+  background-color: #fff;
   border-radius: 5px;
   box-shadow: 0px 0px 10px #000;
+  padding: 20px;
 
   animation: animationForAlertMessage 5s ease-in-out alternate both;
 
@@ -28,20 +30,35 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    color: $tw_pink_400;
+    margin-bottom: 12px;
 
     .alertHearerText {
       line-height: 0;
-      margin-left: 10px;
-      color: #78350f;
-      font-weight: 700;
+      color: $tw_pink_400;
+      font-weight: 600;
     }
   }
 
   .alertMessage {
     margin-top: 5px;
     text-align: center;
-    color: #78350f;
+    color: #000;
     font-size: 14px;
+    margin-bottom: 20px;
+
+    code {
+      font-size: 16px;
+      font-weight: 700;
+      color: $tw_indigo_600;
+    }
+  }
+
+  button {
+    background-color: $tw_indigo_600;
+    padding: 8px 12px;
+    border-radius: 4px;
+    color: #fff;
   }
 }
 
