@@ -10,10 +10,6 @@ import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 
 import useDesignAreaDnd from '@/hooks/dnd/useDesignAreaDnd'
 import { blocksIds } from '@/library/data'
-import {
-  lightUpTheDisplayDropZone,
-  lightUpTheOtherDropZone,
-} from '@/library/utils'
 import useStateSelectors from '@/redux/app/stateSelectors'
 
 import type { Block } from '@/redux/app/types'
@@ -46,6 +42,10 @@ export default function DesignArea() {
   )
 
   const isAllBlocksHaveBeenMoved = transferredBlocks.length < 4
+  const lightUpTheDisplayDropZone =
+    activeBlock?.type === 'display' && activeBlock ? '#dcfce7' : 'transparent'
+  const lightUpTheOtherDropZone =
+    activeBlock?.type !== 'display' && activeBlock ? '#dcfce7' : 'transparent'
 
   if (transferredBlocks.length === 0 && !isOver)
     return (
@@ -74,7 +74,7 @@ export default function DesignArea() {
           <div
             className={displayBlockStyles.dropZoneForDisplayBlock}
             style={{
-              backgroundColor: lightUpTheDisplayDropZone(activeBlock),
+              backgroundColor: lightUpTheDisplayDropZone,
             }}
           >
             {displayBlock && <DropZoneForDisplayBlock block={displayBlock} />}
@@ -97,7 +97,7 @@ export default function DesignArea() {
             className={styles.dropZoneForOtherBlocks}
             style={{
               backgroundColor: isAllBlocksHaveBeenMoved
-                ? lightUpTheOtherDropZone(activeBlock)
+                ? lightUpTheOtherDropZone
                 : 'inherit',
             }}
           >
