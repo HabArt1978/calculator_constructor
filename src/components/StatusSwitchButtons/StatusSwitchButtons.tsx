@@ -3,7 +3,12 @@
 import React from 'react'
 import useStateSelectors from '@/redux/app/stateSelectors'
 import { useAppDispatch } from '@/redux/reduxHooks'
-import { setActiveStatus, setIsAlertVisible } from '@/redux/app/appSlice'
+import {
+  setActiveStatus,
+  deleteDesignBlocks,
+  setIsAlertVisible,
+  setActiveBlock,
+} from '@/redux/app/appSlice'
 
 import { MdOutlineRemoveRedEye } from 'react-icons/md'
 import { PiBracketsAngleBold } from 'react-icons/pi'
@@ -55,6 +60,7 @@ export default function StatusSwitch() {
       <button
         className={styles.deleteButton}
         style={isShowDeleteButton ? { display: 'none' } : {}}
+        onClick={deleteDesignAreaBlocks}
       >
         <MdDeleteForever size={30} color="#ef4444" />
       </button>
@@ -111,5 +117,10 @@ export default function StatusSwitch() {
       baseStyle: styles.constructorBtn,
       iconColor: '#4b5563',
     }
+  }
+
+  function deleteDesignAreaBlocks() {
+    dispatch(deleteDesignBlocks())
+    dispatch(setActiveBlock(null))
   }
 }

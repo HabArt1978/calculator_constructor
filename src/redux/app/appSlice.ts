@@ -9,7 +9,7 @@ import type {
   DroppableBlockPosition,
 } from './types'
 
-import type { Action, PayloadAction } from '@reduxjs/toolkit'
+import type { PayloadAction } from '@reduxjs/toolkit'
 
 export const appSlice = createSlice({
   name: 'appSlice',
@@ -28,6 +28,10 @@ export const appSlice = createSlice({
 
     setDesignBlocks: (state, action: PayloadAction<Block[]>) => {
       state.designBlocks = action.payload
+    },
+
+    deleteDesignBlocks: state => {
+      state.designBlocks = []
     },
 
     setDroppableBlockPosition: (
@@ -51,6 +55,7 @@ export const {
   setActiveBlock,
   addDesignBlock,
   setDesignBlocks,
+  deleteDesignBlocks,
   setDroppableBlockPosition,
   setActiveStatus,
   setIsAlertVisible,
