@@ -11,10 +11,10 @@ export default function useConstructorContainerDnd() {
   const { activeBlock } = useStateSelectors()
   const dispatch = useAppDispatch()
 
-  let blockContainerForBuildingBlocks: JSX.Element | undefined
+  let activeBlockContainerForBuildingBlocks: JSX.Element | undefined
   for (const buildingBlock of buildingBlocksData) {
     if (activeBlock?.id === buildingBlock.block.id) {
-      blockContainerForBuildingBlocks = (
+      activeBlockContainerForBuildingBlocks = (
         <BlockContainer
           block={{ id: activeBlock.id, type: buildingBlock.block.type }}
         >
@@ -25,7 +25,7 @@ export default function useConstructorContainerDnd() {
   }
 
   return {
-    blockContainerForBuildingBlocks,
+    activeBlockContainerForBuildingBlocks,
 
     handleDragStart(event: DragStartEvent) {
       buildingBlocksData.forEach(params => {

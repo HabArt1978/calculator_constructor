@@ -2,9 +2,9 @@
 import { useDroppable } from '@dnd-kit/core'
 
 import useStateSelectors from '@/redux/app/stateSelectors'
-import { getBlockContainerForDesignArea } from '@/library/utils'
 
 import type { Block } from '@/redux/app/types'
+import useDesignAreaDnd from '@/hooks/dnd/useDesignAreaDnd'
 
 interface DropZoneForDisplayBlockProps {
   block: Block
@@ -13,6 +13,7 @@ export default function DropZoneForDisplayBlock({
   block,
 }: DropZoneForDisplayBlockProps) {
   const { activeStatus } = useStateSelectors()
+  const { getBlockContainerForDesignArea } = useDesignAreaDnd()
 
   const { setNodeRef } = useDroppable({
     id: block.id,

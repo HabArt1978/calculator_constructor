@@ -13,8 +13,11 @@ import styles from './constructorContainer.module.scss'
 
 export default function ConstructorContainer() {
   const { activeBlock, activeStatus } = useStateSelectors()
-  const { handleDragStart, handleDragEnd, blockContainerForBuildingBlocks } =
-    useConstructorContainerDnd()
+  const {
+    handleDragStart,
+    handleDragEnd,
+    activeBlockContainerForBuildingBlocks,
+  } = useConstructorContainerDnd()
 
   const id = useId()
 
@@ -33,7 +36,7 @@ export default function ConstructorContainer() {
         activeBlock?.id &&
         createPortal(
           <DragOverlay style={{ opacity: 0.8 }}>
-            {blockContainerForBuildingBlocks}
+            {activeBlockContainerForBuildingBlocks}
           </DragOverlay>,
           document.body,
         )}

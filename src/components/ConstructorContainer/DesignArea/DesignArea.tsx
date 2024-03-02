@@ -11,7 +11,6 @@ import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import useDesignAreaDnd from '@/hooks/dnd/useDesignAreaDnd'
 import { blocksIds } from '@/library/data'
 import {
-  getBlockContainerForDesignArea,
   lightUpTheDisplayDropZone,
   lightUpTheOtherDropZone,
 } from '@/library/utils'
@@ -28,7 +27,12 @@ import blockStyles from '../BuildingBlocks/BlockContainer/blocksContainer.module
 
 export default function DesignArea() {
   const { transferredBlocks, activeBlock, activeStatus } = useStateSelectors()
-  const { handleDragStart, handleDragOver, handleDragEnd } = useDesignAreaDnd()
+  const {
+    handleDragStart,
+    handleDragOver,
+    handleDragEnd,
+    getBlockContainerForDesignArea,
+  } = useDesignAreaDnd()
 
   const id = useId()
 

@@ -1,6 +1,7 @@
 import type { DragEndEvent, DragOverEvent, DragStartEvent } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
 
+import BlockContainerForDesignArea from '@/components/ConstructorContainer/DesignArea/BlockContainerForDesignArea/BlockContainerForDesignArea'
 import { buildingBlocksData } from '@/library/data'
 import {
   setActiveBlock,
@@ -10,27 +11,26 @@ import {
 import { useAppDispatch } from '@/redux/reduxHooks'
 import { ActiveBlock, DroppableBlockPosition } from '@/redux/app/types'
 import useStateSelectors from '@/redux/app/stateSelectors'
-import BlockContainerForDesignArea from '@/components/ConstructorContainer/DesignArea/BlockContainerForDesignArea/BlockContainerForDesignArea'
 
 export default function useDesignAreaDnd() {
-  const { transferredBlocks, activeBlock } = useStateSelectors()
+  const { transferredBlocks } = useStateSelectors()
   const dispatch = useAppDispatch()
 
-  let blockContainerForDesignArea: JSX.Element | undefined
-  for (const buildingBlock of buildingBlocksData) {
-    if (activeBlock?.id === buildingBlock.block.id) {
-      blockContainerForDesignArea = (
-        <BlockContainerForDesignArea
-          block={{ id: activeBlock.id, type: buildingBlock.block.type }}
-        >
-          {buildingBlock.children}
-        </BlockContainerForDesignArea>
-      )
-    }
-  }
-
   return {
-    blockContainerForDesignArea,
+    getBlockContainerForDesignArea(activeBlockId: string | number) {
+      for (const buildingBlock of buildingBlocksData) {
+        if (activeBlockId === buildingBlock.block.id) {
+          return (
+            <BlockContainerForDesignArea
+              block={{ id: activeBlockId, type: buildingBlock.block.type }}
+            >
+              {buildingBlock.children}
+            </BlockContainerForDesignArea>
+          )
+        }
+      }
+      return undefined
+    },
 
     handleDragStart(event: DragStartEvent) {
       buildingBlocksData.forEach(params => {
