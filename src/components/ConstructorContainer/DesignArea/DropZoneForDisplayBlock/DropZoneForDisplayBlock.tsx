@@ -1,39 +1,27 @@
-import React from 'react'
+// import { useSortable } from '@dnd-kit/sortable'
+import { useDroppable } from '@dnd-kit/core'
+
 import useStateSelectors from '@/redux/app/stateSelectors'
 
-import {
-  getBlockContainerForDesignArea,
-  lightUpTheDisplayDropZone,
-} from '@/library/utils'
+import type { Block } from '@/redux/app/types'
+import useDesignAreaDnd from '@/hooks/dnd/useDesignAreaDnd'
 
-import styles from './dropZoneForDisplayBlock.module.scss'
+interface DropZoneForDisplayBlockProps {
+  block: Block
+}
+export default function DropZoneForDisplayBlock({
+  block,
+}: DropZoneForDisplayBlockProps) {
+  const { activeStatus } = useStateSelectors()
+  const { getBlockContainerForDesignArea } = useDesignAreaDnd()
 
-export default function DropZoneForDisplayBlock() {
-  const { transferredBlocks, activeBlock, activeStatus } = useStateSelectors()
+  const { setNodeRef } = useDroppable({
+    id: block.id,
+  })
 
   return (
-    <div
-      style={
-        activeStatus === 'runtime'
-          ? { cursor: 'auto' }
-          : { cursor: 'not-allowed' }
-      }
-    >
-      <div
-        className={styles.dropZoneForDisplayBlock}
-        style={{
-          backgroundColor: lightUpTheDisplayDropZone(activeBlock),
-        }}
-      >
-        {transferredBlocks.map(
-          block =>
-            block.type === 'display' && (
-              <div key={block.id}>
-                {getBlockContainerForDesignArea(block.id)}
-              </div>
-            ),
-        )}
-      </div>
+    <div ref={activeStatus === 'constructor' ? setNodeRef : null}>
+      {getBlockContainerForDesignArea(block.id)}
     </div>
   )
 }

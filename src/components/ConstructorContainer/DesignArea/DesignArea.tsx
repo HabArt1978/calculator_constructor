@@ -1,53 +1,51 @@
-import React, { useId } from 'react'
+import React, { useId, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 import {
-  setActiveBlock,
-  setDesignBlocks,
-  setDroppableBlockPosition,
-} from '@/redux/app/appSlice'
-import { useAppDispatch } from '@/redux/reduxHooks'
-import useStateSelectors from '@/redux/app/stateSelectors'
-
-import {
   DndContext,
-  DragEndEvent,
-  DragOverEvent,
   DragOverlay,
-  DragStartEvent,
   closestCenter,
   useDroppable,
 } from '@dnd-kit/core'
-import {
-  SortableContext,
-  arrayMove,
-  verticalListSortingStrategy,
-} from '@dnd-kit/sortable'
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 
-import { blocksIds, buildingBlocksData } from '@/library/data'
-import {
-  getBlockContainerForDesignArea,
-  lightUpTheOtherDropZone,
-} from '@/library/utils'
+import useDesignAreaDnd from '@/hooks/dnd/useDesignAreaDnd'
+import { blocksIds } from '@/library/data'
+import useStateSelectors from '@/redux/app/stateSelectors'
+
+import type { Block } from '@/redux/app/types'
 
 import InstructionForDesignBlock from './InstructionForDesignBlock/InstructionForDesignBlock'
 import DropZoneForDisplayBlock from './DropZoneForDisplayBlock/DropZoneForDisplayBlock'
 
-import type { ActiveBlock, DroppableBlockPosition } from '@/redux/app/types'
-
 import styles from './designArea.module.scss'
+import displayBlockStyles from './DropZoneForDisplayBlock/dropZoneForDisplayBlock.module.scss'
 import blockStyles from '../BuildingBlocks/BlockContainer/blocksContainer.module.scss'
 
 export default function DesignArea() {
-  const { transferredBlocks, activeBlock } = useStateSelectors()
+  const { transferredBlocks, activeBlock, activeStatus } = useStateSelectors()
+  const {
+    handleDragStart,
+    handleDragOver,
+    handleDragEnd,
+    getBlockContainerForDesignArea,
+  } = useDesignAreaDnd()
 
-  const dispatch = useAppDispatch()
   const id = useId()
 
   const { isOver, setNodeRef } = useDroppable({
     id: 'dropZone',
   })
 
+  const displayBlock = useMemo<Block | undefined>(
+    () => transferredBlocks.find(b => b.type === 'display'),
+    [transferredBlocks],
+  )
+
   const isAllBlocksHaveBeenMoved = transferredBlocks.length < 4
+  const lightUpTheDisplayDropZone =
+    activeBlock?.type === 'display' && activeBlock ? '#dcfce7' : 'transparent'
+  const lightUpTheOtherDropZone =
+    activeBlock?.type !== 'display' && activeBlock ? '#dcfce7' : 'transparent'
 
   if (transferredBlocks.length === 0 && !isOver)
     return (
@@ -59,7 +57,30 @@ export default function DesignArea() {
 
   return (
     <div className={styles.designAreaActive} ref={setNodeRef}>
-      <DropZoneForDisplayBlock />
+      <DndContext
+        collisionDetection={closestCenter}
+        onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
+        onDragEnd={handleDragEnd}
+        id={id}
+      >
+        <div
+          style={
+            activeStatus === 'runtime'
+              ? { cursor: 'auto' }
+              : { cursor: 'not-allowed' }
+          }
+        >
+          <div
+            className={displayBlockStyles.dropZoneForDisplayBlock}
+            style={{
+              backgroundColor: lightUpTheDisplayDropZone,
+            }}
+          >
+            {displayBlock && <DropZoneForDisplayBlock block={displayBlock} />}
+          </div>
+        </div>
+      </DndContext>
 
       <DndContext
         collisionDetection={closestCenter}
@@ -76,7 +97,7 @@ export default function DesignArea() {
             className={styles.dropZoneForOtherBlocks}
             style={{
               backgroundColor: isAllBlocksHaveBeenMoved
-                ? lightUpTheOtherDropZone(activeBlock)
+                ? lightUpTheOtherDropZone
                 : 'inherit',
             }}
           >
@@ -105,66 +126,4 @@ export default function DesignArea() {
       </DndContext>
     </div>
   )
-
-  function handleDragStart(event: DragStartEvent) {
-    buildingBlocksData.forEach(params => {
-      if (event.active.data.current?.type === params.block.type) {
-        const dragBlockId = event.active.id
-        const dragBlockType = event.active.data.current.type as string
-
-        const activeDragBlock: ActiveBlock = {
-          id: dragBlockId,
-          type: dragBlockType,
-        }
-
-        dispatch(setActiveBlock(activeDragBlock))
-      }
-    })
-  }
-
-  function handleDragOver(event: DragOverEvent) {
-    const { active, over } = event
-    if (!over) return
-
-    const activeId = active.id
-    const overId = over.id
-
-    if (activeId === overId) return
-
-    const oldIndex = transferredBlocks.findIndex(block => block.id === activeId)
-    const newIndex = transferredBlocks.findIndex(block => block.id === overId)
-
-    let dropPosition: DroppableBlockPosition = null
-
-    if (oldIndex > newIndex) {
-      dropPosition = 'top'
-    } else {
-      dropPosition = 'bottom'
-    }
-
-    dispatch(setDroppableBlockPosition(dropPosition))
-  }
-
-  function handleDragEnd(event: DragEndEvent) {
-    dispatch(setDroppableBlockPosition(null))
-
-    const { active, over } = event
-    if (!over) return
-
-    const activeId = active.id
-    const overId = over.id
-
-    if (activeId === overId) return
-
-    const oldIndex = transferredBlocks.findIndex(block => block.id === activeId)
-    const newIndex = transferredBlocks.findIndex(block => block.id === overId)
-
-    const sortedTransferredBlocks = arrayMove(
-      transferredBlocks,
-      oldIndex,
-      newIndex,
-    )
-
-    dispatch(setDesignBlocks(sortedTransferredBlocks))
-  }
 }

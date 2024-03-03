@@ -1,4 +1,4 @@
-import React from 'react'
+import { useMemo } from 'react'
 import useStateSelectors from '@/redux/app/stateSelectors'
 import { useDraggable } from '@dnd-kit/core'
 
@@ -20,25 +20,18 @@ export default function BlockContainer({
     },
   })
 
-  function isDisabledContainer() {
-    for (const transferBlock of transferredBlocks) {
-      if (transferredBlocks.length === 0) return
-
-      if (transferBlock.type === block.type) {
-        return true
-      } else {
-        false
-      }
-    }
-  }
+  const isDisabledContainer = useMemo<boolean>(
+    () => !!transferredBlocks.find(b => b.type === block.type),
+    [block.type, transferredBlocks],
+  )
 
   return (
-    <div style={!isDisabledContainer() ? {} : { cursor: 'not-allowed' }}>
+    <div style={isDisabledContainer ? { cursor: 'not-allowed' } : {}}>
       <div
         className={
-          !isDisabledContainer()
-            ? styles.blockContainer
-            : styles.blockContainerDisabled
+          isDisabledContainer
+            ? styles.blockContainerDisabled
+            : styles.blockContainer
         }
         ref={setNodeRef}
         {...listeners}
