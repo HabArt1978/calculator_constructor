@@ -34,28 +34,49 @@ export default function BlockContainerForDesignArea({
   ]
 
   return (
-    <div
-      className={blockContainerStyles.join(' ')}
-      ref={activeStatus === 'constructor' ? setNodeRef : null}
-      {...listeners}
-      {...attributes}
-    >
-      {isOver && <BlockDropPositionIndicator />}
+    <>
+      {activeStatus === 'constructor' ? (
+        <div
+          className={blockContainerStyles.join(' ')}
+          ref={setNodeRef}
+          {...listeners}
+          {...attributes}
+        >
+          {isOver && <BlockDropPositionIndicator />}
 
-      <div
-        className={unitInnerContainerStyles.join(' ')}
-        style={
-          block.type === ('display' || 'equal')
-            ? { justifyContent: 'center', alignItems: 'center' }
-            : block.type === 'operators'
-              ? { justifyContent: 'space-between', alignItems: 'center' }
-              : block.type === 'numeric'
-                ? { flexWrap: 'wrap', justifyContent: 'space-between' }
-                : {}
-        }
-      >
-        {children}
-      </div>
-    </div>
+          <div
+            className={unitInnerContainerStyles.join(' ')}
+            style={
+              block.type === ('display' || 'equal')
+                ? { justifyContent: 'center', alignItems: 'center' }
+                : block.type === 'operators'
+                  ? { justifyContent: 'space-between', alignItems: 'center' }
+                  : block.type === 'numeric'
+                    ? { flexWrap: 'wrap', justifyContent: 'space-between' }
+                    : {}
+            }
+          >
+            {children}
+          </div>
+        </div>
+      ) : (
+        <div className={blockContainerStyles.join(' ')}>
+          <div
+            className={unitInnerContainerStyles.join(' ')}
+            style={
+              block.type === ('display' || 'equal')
+                ? { justifyContent: 'center', alignItems: 'center' }
+                : block.type === 'operators'
+                  ? { justifyContent: 'space-between', alignItems: 'center' }
+                  : block.type === 'numeric'
+                    ? { flexWrap: 'wrap', justifyContent: 'space-between' }
+                    : {}
+            }
+          >
+            {children}
+          </div>
+        </div>
+      )}
+    </>
   )
 }

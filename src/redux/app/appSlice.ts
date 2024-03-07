@@ -1,15 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
-import appState from './initialState'
+import type { PayloadAction } from '@reduxjs/toolkit'
 
+import { Operator } from '@/library/calculator'
+
+import appState from './initialState'
 import type {
   ActiveBlock,
   ActiveStatus,
   AlertVisible,
   Block,
+  Digit,
+  DisplayValue,
   DroppableBlockPosition,
 } from './types'
-
-import type { PayloadAction } from '@reduxjs/toolkit'
 
 export const appSlice = createSlice({
   name: 'appSlice',
@@ -48,6 +51,22 @@ export const appSlice = createSlice({
     setIsAlertVisible: (state, action: PayloadAction<AlertVisible>) => {
       state.isAlertVisible = action.payload
     },
+
+    setDisplayValue: (state, action: PayloadAction<DisplayValue>) => {
+      state.displayValue = action.payload
+    },
+
+    setFirstDigit: (state, action: PayloadAction<Digit>) => {
+      state.firstDigit = action.payload
+    },
+
+    setOperator: (state, action: PayloadAction<Operator>) => {
+      state.operator = action.payload
+    },
+
+    setSecondDigit: (state, action: PayloadAction<Digit>) => {
+      state.secondDigit = action.payload
+    },
   },
 })
 
@@ -59,5 +78,9 @@ export const {
   setDroppableBlockPosition,
   setActiveStatus,
   setIsAlertVisible,
+  setDisplayValue,
+  setFirstDigit,
+  setOperator,
+  setSecondDigit,
 } = appSlice.actions
 export default appSlice.reducer
