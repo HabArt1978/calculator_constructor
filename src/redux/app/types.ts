@@ -7,9 +7,8 @@ export type AppStateTypes = {
   activeStatus: ActiveStatus
   isAlertVisible: AlertVisible
 
-  displayValue: DisplayValue
   firstDigit: Digit
-  operator: Operator
+  operator: OperatorType
   secondDigit: Digit
 }
 
@@ -34,6 +33,6 @@ export type ActiveStatus = 'runtime' | 'constructor'
 
 export type AlertVisible = boolean
 
-export type DisplayValue = string
+export type Digit = string | null
 
-export type Digit = number | null
+export type OperatorType = Operator | null

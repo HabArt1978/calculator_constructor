@@ -13,8 +13,6 @@ export default function useStateSelectors() {
 
   const isAlertVisible = state.isAlertVisible
 
-  const displayValue = state.displayValue
-
   const firstDigit = state.firstDigit
 
   const operator = state.operator
@@ -27,7 +25,6 @@ export default function useStateSelectors() {
     droppableBlockPosition,
     activeStatus,
     isAlertVisible,
-    displayValue,
     firstDigit,
     operator,
     secondDigit,

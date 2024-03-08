@@ -11,11 +11,12 @@ export default function NumericBlock() {
   const dispatch = useAppDispatch()
 
   const clickHandler: MouseEventHandler<HTMLButtonElement> = event => {
-    console.log('clicked!')
-    if (operator) {
-      dispatch(setFirstDigit(Number(event.currentTarget.textContent)))
+    const buttonValue = event.currentTarget.textContent
+
+    if (!operator) {
+      dispatch(setFirstDigit(buttonValue))
     } else {
-      dispatch(setSecondDigit(Number(event.currentTarget.textContent)))
+      dispatch(setSecondDigit(buttonValue))
     }
   }
 

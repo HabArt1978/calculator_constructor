@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-import { Operator } from '@/library/calculator'
-
 import appState from './initialState'
 import type {
   ActiveBlock,
@@ -10,8 +8,8 @@ import type {
   AlertVisible,
   Block,
   Digit,
-  DisplayValue,
   DroppableBlockPosition,
+  OperatorType,
 } from './types'
 
 export const appSlice = createSlice({
@@ -52,20 +50,28 @@ export const appSlice = createSlice({
       state.isAlertVisible = action.payload
     },
 
-    setDisplayValue: (state, action: PayloadAction<DisplayValue>) => {
-      state.displayValue = action.payload
-    },
-
     setFirstDigit: (state, action: PayloadAction<Digit>) => {
-      state.firstDigit = action.payload
+      if (!state.operator) {
+        const newValue = [state.firstDigit, action.payload]
+
+        state.firstDigit = newValue.join('')
+      } else {
+        state.firstDigit = action.payload
+      }
     },
 
-    setOperator: (state, action: PayloadAction<Operator>) => {
+    setOperator: (state, action: PayloadAction<OperatorType>) => {
       state.operator = action.payload
     },
 
     setSecondDigit: (state, action: PayloadAction<Digit>) => {
-      state.secondDigit = action.payload
+      if (state.operator) {
+        const newValue = [state.secondDigit, action.payload]
+
+        state.secondDigit = newValue.join('')
+      } else {
+        state.secondDigit = action.payload
+      }
     },
   },
 })
@@ -78,7 +84,6 @@ export const {
   setDroppableBlockPosition,
   setActiveStatus,
   setIsAlertVisible,
-  setDisplayValue,
   setFirstDigit,
   setOperator,
   setSecondDigit,
