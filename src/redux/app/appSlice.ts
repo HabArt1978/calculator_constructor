@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, type CaseReducer } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 import appState from './initialState'
@@ -6,10 +6,25 @@ import type {
   ActiveBlock,
   ActiveStatus,
   AlertVisible,
+  AppStateTypes,
   Block,
   DroppableBlockPosition,
 } from './types'
 import { Operator, calculate } from '@/library/calculator'
+
+const calculateReducer: CaseReducer<AppStateTypes> = state => {
+  if (!state.operator || !state.firstNumber || !state.secondNumber) return
+
+  const result = calculate(
+    Number(state.firstNumber),
+    Number(state.secondNumber),
+    state.operator,
+  )
+
+  state.secondNumber = null
+  state.operator = null
+  state.firstNumber = String(result)
+}
 
 export const appSlice = createSlice({
   name: 'appSlice',
@@ -56,18 +71,33 @@ export const appSlice = createSlice({
     },
 
     setOperator: (state, action: PayloadAction<Operator | null>) => {
+      if (state.operator) calculateReducer(state, { type: '' })
+
       state.operator = action.payload
     },
 
-    appendActiveDigit: (state, action: PayloadAction<string | null>) => {
+    appendActiveDigit: (state, action: PayloadAction<number | ''>) => {
       const value = state.operator ? state.secondNumber : state.firstNumber
+      const newValue = `${value ?? ''}${action.payload}`
 
-      const newValue = [value, action.payload]
+      // Пропускать второй разделитель
+      if ((newValue.match(/\./g)?.length ?? 0) > 1) {
+        return
+      }
+      // Не давать вводить более 3 цифр после разделителя
+      const floatPointIndex = newValue.lastIndexOf('.')
+      if (floatPointIndex !== -1 && newValue.length - floatPointIndex > 4) {
+        return
+      }
+      // Не давать вводить более 9 цифр перед разделителем
+      else if (floatPointIndex === -1 && newValue.length > 12) {
+        return
+      }
 
       if (state.operator) {
-        state.secondNumber = newValue.join('')
+        state.secondNumber = newValue
       } else {
-        state.firstNumber = newValue.join('')
+        state.firstNumber = newValue
       }
     },
 
@@ -93,19 +123,7 @@ export const appSlice = createSlice({
       state.secondNumber = null
     },
 
-    calculateResult: state => {
-      if (!state.operator || !state.firstNumber || !state.secondNumber) return
-
-      const result = calculate(
-        Number(state.firstNumber),
-        Number(state.secondNumber),
-        state.operator,
-      )
-
-      state.secondNumber = null
-      state.operator = null
-      state.firstNumber = String(result)
-    },
+    calculateResult: calculateReducer,
   },
 })
 
