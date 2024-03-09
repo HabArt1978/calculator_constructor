@@ -7,9 +7,9 @@ export const appState: AppStateTypes = {
   activeStatus: 'constructor',
   isAlertVisible: false,
 
-  firstDigit: null,
+  firstNumber: null,
   operator: null,
-  secondDigit: null,
+  secondNumber: null,
 }
 
 export default appState

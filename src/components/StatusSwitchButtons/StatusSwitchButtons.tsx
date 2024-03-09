@@ -7,9 +7,9 @@ import {
   setActiveStatus,
   deleteDesignBlocks,
   setActiveBlock,
-  setFirstDigit,
+  appendFirstDigit,
   setOperator,
-  setSecondDigit,
+  appendSecondDigit,
 } from '@/redux/app/appSlice'
 
 import { MdOutlineRemoveRedEye } from 'react-icons/md'

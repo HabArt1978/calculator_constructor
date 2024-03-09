@@ -1,39 +1,47 @@
-import React, { type MouseEventHandler } from 'react'
+import React from 'react'
+import { PiPlusMinus } from 'react-icons/pi'
+
+import { useAppDispatch } from '@/redux/reduxHooks'
+import { appendActiveDigit, invertActiveNumber } from '@/redux/app/appSlice'
 
 import styles from './numericBlock.module.scss'
-import { useAppDispatch, useAppSelector } from '@/redux/reduxHooks'
-import { setFirstDigit, setSecondDigit } from '@/redux/app/appSlice'
 
-const buttonValues = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', ',']
+const buttonValues = [
+  '7',
+  '8',
+  '9',
+  '4',
+  '5',
+  '6',
+  '1',
+  '2',
+  '3',
+  '+/-',
+  '0',
+  '.',
+]
 
 export default function NumericBlock() {
-  const { operator } = useAppSelector(({ appState }) => appState)
   const dispatch = useAppDispatch()
-
-  const clickHandler: MouseEventHandler<HTMLButtonElement> = event => {
-    const buttonValue = event.currentTarget.textContent
-
-    if (!operator) {
-      dispatch(setFirstDigit(buttonValue))
-    } else {
-      dispatch(setSecondDigit(buttonValue))
-    }
-  }
 
   return (
     <>
       {buttonValues.map((value, idx) => (
         <React.Fragment key={idx}>
-          {value !== '0' ? (
-            <button className={styles.numberedButton} onClick={clickHandler}>
+          {value !== '+/-' ? (
+            <button
+              className={styles.numberedButton}
+              onClick={() => dispatch(appendActiveDigit(value))}
+              style={value === '.' ? { fontSize: '30px' } : {}}
+            >
               {value}
             </button>
           ) : (
             <button
-              className={styles.numberedButtonZero}
-              onClick={clickHandler}
+              className={styles.numberedButton}
+              onClick={() => dispatch(invertActiveNumber())}
             >
-              {value}
+              <PiPlusMinus size={18} />
             </button>
           )}
         </React.Fragment>

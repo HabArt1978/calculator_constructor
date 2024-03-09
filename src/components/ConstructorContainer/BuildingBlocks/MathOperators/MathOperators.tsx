@@ -1,5 +1,4 @@
-import React, { MouseEventHandler } from 'react'
-import useStateSelectors from '@/redux/app/stateSelectors'
+import React from 'react'
 
 import { Operator } from '@/library/calculator'
 

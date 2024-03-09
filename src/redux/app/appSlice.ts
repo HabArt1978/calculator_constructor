@@ -7,10 +7,9 @@ import type {
   ActiveStatus,
   AlertVisible,
   Block,
-  Digit,
   DroppableBlockPosition,
-  OperatorType,
 } from './types'
+import { Operator, calculate } from '@/library/calculator'
 
 export const appSlice = createSlice({
   name: 'appSlice',
@@ -46,9 +45,9 @@ export const appSlice = createSlice({
       state.activeStatus = action.payload
 
       if (state.activeStatus === 'constructor') {
-        state.firstDigit = null
+        state.firstNumber = null
         state.operator = null
-        state.secondDigit = null
+        state.secondNumber = null
       }
     },
 
@@ -56,28 +55,56 @@ export const appSlice = createSlice({
       state.isAlertVisible = action.payload
     },
 
-    setFirstDigit: (state, action: PayloadAction<Digit>) => {
-      if (!state.operator) {
-        const newValue = [state.firstDigit, action.payload]
-
-        state.firstDigit = newValue.join('')
-      } else {
-        state.firstDigit = action.payload
-      }
-    },
-
-    setOperator: (state, action: PayloadAction<OperatorType>) => {
+    setOperator: (state, action: PayloadAction<Operator | null>) => {
       state.operator = action.payload
     },
 
-    setSecondDigit: (state, action: PayloadAction<Digit>) => {
-      if (state.operator) {
-        const newValue = [state.secondDigit, action.payload]
+    appendActiveDigit: (state, action: PayloadAction<string | null>) => {
+      const value = state.operator ? state.secondNumber : state.firstNumber
 
-        state.secondDigit = newValue.join('')
+      const newValue = [value, action.payload]
+
+      if (state.operator) {
+        state.secondNumber = newValue.join('')
       } else {
-        state.secondDigit = action.payload
+        state.firstNumber = newValue.join('')
       }
+    },
+
+    invertActiveNumber: state => {
+      if (state.operator) {
+        state.secondNumber = String(Number(state.secondNumber) * -1)
+      } else {
+        state.firstNumber = String(Number(state.firstNumber) * -1)
+      }
+    },
+
+    dropLastActiveDigit: state => {
+      if (state.operator) {
+        state.secondNumber = state.secondNumber?.slice(0, -1) ?? null
+      } else {
+        state.firstNumber = state.firstNumber?.slice(0, -1) ?? null
+      }
+    },
+
+    clearDisplayValue: state => {
+      state.firstNumber = null
+      state.operator = null
+      state.secondNumber = null
+    },
+
+    calculateResult: state => {
+      if (!state.operator || !state.firstNumber || !state.secondNumber) return
+
+      const result = calculate(
+        Number(state.firstNumber),
+        Number(state.secondNumber),
+        state.operator,
+      )
+
+      state.secondNumber = null
+      state.operator = null
+      state.firstNumber = String(result)
     },
   },
 })
@@ -90,8 +117,11 @@ export const {
   setDroppableBlockPosition,
   setActiveStatus,
   setIsAlertVisible,
-  setFirstDigit,
   setOperator,
-  setSecondDigit,
+  appendActiveDigit,
+  invertActiveNumber,
+  dropLastActiveDigit,
+  clearDisplayValue,
+  calculateResult,
 } = appSlice.actions
 export default appSlice.reducer

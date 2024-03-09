@@ -13,11 +13,11 @@ export default function useStateSelectors() {
 
   const isAlertVisible = state.isAlertVisible
 
-  const firstDigit = state.firstDigit
+  const firstNumber = state.firstNumber
 
   const operator = state.operator
 
-  const secondDigit = state.secondDigit
+  const secondNumber = state.secondNumber
 
   return {
     activeBlock,
@@ -25,8 +25,8 @@ export default function useStateSelectors() {
     droppableBlockPosition,
     activeStatus,
     isAlertVisible,
-    firstDigit,
+    firstNumber,
     operator,
-    secondDigit,
+    secondNumber,
   }
 }

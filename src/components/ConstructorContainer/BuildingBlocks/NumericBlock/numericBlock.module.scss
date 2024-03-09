@@ -1,15 +1,12 @@
 @import '@/sass/variables';
 
 .numberedButton {
+  font-size: 18px;
+  line-height: 0;
   width: 32%;
   height: 50px;
 
-  &:nth-last-child(n + 2) {
+  &:nth-last-child(n + 4) {
     margin-bottom: 5px;
   }
-}
-
-.numberedButtonZero {
-  width: 66%;
-  height: 50px;
 }

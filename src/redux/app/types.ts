@@ -7,9 +7,9 @@ export type AppStateTypes = {
   activeStatus: ActiveStatus
   isAlertVisible: AlertVisible
 
-  firstDigit: Digit
-  operator: OperatorType
-  secondDigit: Digit
+  firstNumber: string | null
+  operator: Operator | null
+  secondNumber: string | null
 }
 
 export type ActiveBlock = Block | null
@@ -32,7 +32,3 @@ export type DroppableBlockPosition = 'top' | 'bottom' | null
 export type ActiveStatus = 'runtime' | 'constructor'
 
 export type AlertVisible = boolean
-
-export type Digit = string | null
-
-export type OperatorType = Operator | null
