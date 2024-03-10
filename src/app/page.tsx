@@ -1,5 +1,5 @@
-import StatusSwitchButtons from '@/components/StatusSwitchButtons/StatusSwitchButtons'
 import ConstructorContainer from '@/components/ConstructorContainer/ConstructorContainer'
+import StatusSwitchButtons from '@/components/StatusSwitchButtons/StatusSwitchButtons'
 
 import styles from './page.module.scss'
 

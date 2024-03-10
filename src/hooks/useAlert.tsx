@@ -1,3 +1,5 @@
+'use client'
+
 import { setIsAlertVisible } from '@/redux/app/appSlice'
 import { useAppDispatch, useAppSelector } from '@/redux/reduxHooks'
 

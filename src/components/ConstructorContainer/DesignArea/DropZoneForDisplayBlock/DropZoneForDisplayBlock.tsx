@@ -1,10 +1,8 @@
-// import { useSortable } from '@dnd-kit/sortable'
 import { useDroppable } from '@dnd-kit/core'
 
-import useStateSelectors from '@/redux/app/stateSelectors'
-
-import type { Block } from '@/redux/app/types'
 import useDesignAreaDnd from '@/hooks/dnd/useDesignAreaDnd'
+import useStateSelectors from '@/redux/app/stateSelectors'
+import type { Block } from '@/redux/app/types'
 
 interface DropZoneForDisplayBlockProps {
   block: Block

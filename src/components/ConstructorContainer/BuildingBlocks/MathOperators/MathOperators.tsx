@@ -1,15 +1,11 @@
-import React from 'react'
+import { HiMinus, HiPlus, HiXMark } from 'react-icons/hi2'
+import { TbDivide } from 'react-icons/tb'
 
 import { Operator } from '@/library/calculator'
-
-import { TbDivide } from 'react-icons/tb'
-import { HiXMark } from 'react-icons/hi2'
-import { HiMinus } from 'react-icons/hi2'
-import { HiPlus } from 'react-icons/hi2'
+import { setOperator } from '@/redux/app/appSlice'
+import { useAppDispatch } from '@/redux/reduxHooks'
 
 import styles from './mathOperators.module.scss'
-import { useAppDispatch } from '@/redux/reduxHooks'
-import { setOperator } from '@/redux/app/appSlice'
 
 const mathOperatorsParams = [
   { icon: <TbDivide />, value: Operator.Div },

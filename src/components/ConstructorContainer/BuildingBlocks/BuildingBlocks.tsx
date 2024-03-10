@@ -1,10 +1,10 @@
-import React from 'react'
+import { Fragment } from 'react'
+
+import { buildingBlocksData } from '@/library/data'
+import useStateSelectors from '@/redux/app/stateSelectors'
 
 import BlockContainer from './BlockContainer/BlockContainer'
-import { buildingBlocksData } from '@/library/data'
-
 import styles from './buildingBlock.module.scss'
-import useStateSelectors from '@/redux/app/stateSelectors'
 
 export default function BuildingBlocks() {
   const { activeStatus } = useStateSelectors()
@@ -17,13 +17,13 @@ export default function BuildingBlocks() {
       style={isHiddenBlock ? { display: 'none' } : {}}
     >
       {buildingBlocksData.map(blockData => (
-        <React.Fragment key={blockData.block.id}>
+        <Fragment key={blockData.block.id}>
           <BlockContainer
             block={{ id: blockData.block.id, type: blockData.block.type }}
           >
             {blockData.children}
           </BlockContainer>
-        </React.Fragment>
+        </Fragment>
       ))}
     </div>
   )

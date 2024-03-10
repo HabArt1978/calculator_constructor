@@ -1,7 +1,7 @@
-import { useMemo } from 'react'
-import useStateSelectors from '@/redux/app/stateSelectors'
 import { useDraggable } from '@dnd-kit/core'
+import { useMemo } from 'react'
 
+import useStateSelectors from '@/redux/app/stateSelectors'
 import type { BlockContainerProp } from '@/redux/app/types'
 
 import styles from './blocksContainer.module.scss'

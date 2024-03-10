@@ -1,11 +1,11 @@
 import type { DragEndEvent, DragStartEvent } from '@dnd-kit/core'
 
 import BlockContainer from '@/components/ConstructorContainer/BuildingBlocks/BlockContainer/BlockContainer'
-import { buildingBlocksData, blocksIds } from '@/library/data'
+import { blocksIds, buildingBlocksData } from '@/library/data'
 import { addDesignBlock, setActiveBlock } from '@/redux/app/appSlice'
-import { useAppDispatch } from '@/redux/reduxHooks'
-import { ActiveBlock, Block } from '@/redux/app/types'
 import useStateSelectors from '@/redux/app/stateSelectors'
+import { ActiveBlock, Block } from '@/redux/app/types'
+import { useAppDispatch } from '@/redux/reduxHooks'
 
 export default function useConstructorContainerDnd() {
   const { activeBlock } = useStateSelectors()

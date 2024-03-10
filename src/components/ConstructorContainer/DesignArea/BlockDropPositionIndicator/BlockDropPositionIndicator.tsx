@@ -1,6 +1,6 @@
-import React from 'react'
-import styles from './blockDropPositionIndicator.module.scss'
 import useStateSelectors from '@/redux/app/stateSelectors'
+
+import styles from './blockDropPositionIndicator.module.scss'
 
 export default function BlockDropPositionIndicator() {
   const { droppableBlockPosition } = useStateSelectors()

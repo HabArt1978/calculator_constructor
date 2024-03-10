@@ -1,8 +1,7 @@
-import React from 'react'
+import { FcAddImage } from 'react-icons/fc'
 
 import { ActiveBlock } from '@/redux/app/types'
 
-import { FcAddImage } from 'react-icons/fc'
 import styles from './InstructionForDesignBlock.module.scss'
 
 interface InstructionForDesignBlockProps {

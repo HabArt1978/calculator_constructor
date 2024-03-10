@@ -1,10 +1,9 @@
-import { ReduxProvider } from '@/redux/ReduxProvider'
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
 
 import AlertPopUp from '@/components/AlertPopUp/AlertPopUp'
+import ReduxProvider from '@/redux/ReduxProvider'
 
-import type { Metadata } from 'next'
-
-import { Inter } from 'next/font/google'
 import './globals.scss'
 
 const inter = Inter({ subsets: ['cyrillic'] })

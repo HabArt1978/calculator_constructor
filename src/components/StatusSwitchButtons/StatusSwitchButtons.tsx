@@ -1,20 +1,17 @@
 'use client'
 
-import React from 'react'
-import useStateSelectors from '@/redux/app/stateSelectors'
-import { useAppDispatch } from '@/redux/reduxHooks'
-import {
-  setActiveStatus,
-  deleteDesignBlocks,
-  setActiveBlock,
-} from '@/redux/app/appSlice'
-
-import { MdOutlineRemoveRedEye } from 'react-icons/md'
+import { MdDeleteForever, MdOutlineRemoveRedEye } from 'react-icons/md'
 import { PiBracketsAngleBold } from 'react-icons/pi'
-import { MdDeleteForever } from 'react-icons/md'
 
 import styles from '@/components/statusSwitchButtons/statusSwitchButtons.module.scss'
 import useAlert from '@/hooks/useAlert'
+import {
+  deleteDesignBlocks,
+  setActiveBlock,
+  setActiveStatus,
+} from '@/redux/app/appSlice'
+import useStateSelectors from '@/redux/app/stateSelectors'
+import { useAppDispatch } from '@/redux/reduxHooks'
 
 export default function StatusSwitch() {
   const { activeStatus, transferredBlocks } = useStateSelectors()

@@ -1,8 +1,8 @@
-import React from 'react'
+import { Fragment } from 'react'
 import { PiPlusMinus } from 'react-icons/pi'
 
-import { useAppDispatch } from '@/redux/reduxHooks'
 import { appendActiveDigit, invertActiveNumber } from '@/redux/app/appSlice'
+import { useAppDispatch } from '@/redux/reduxHooks'
 
 import styles from './numericBlock.module.scss'
 
@@ -27,7 +27,7 @@ export default function NumericBlock() {
   return (
     <>
       {buttonValues.map((value, idx) => (
-        <React.Fragment key={idx}>
+        <Fragment key={idx}>
           {value !== '+/-' ? (
             <button
               className={styles.numberedButton}
@@ -44,7 +44,7 @@ export default function NumericBlock() {
               <PiPlusMinus size={18} />
             </button>
           )}
-        </React.Fragment>
+        </Fragment>
       ))}
     </>
   )

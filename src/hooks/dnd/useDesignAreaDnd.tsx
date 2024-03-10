@@ -8,9 +8,9 @@ import {
   setDesignBlocks,
   setDroppableBlockPosition,
 } from '@/redux/app/appSlice'
-import { useAppDispatch } from '@/redux/reduxHooks'
-import { ActiveBlock, DroppableBlockPosition } from '@/redux/app/types'
 import useStateSelectors from '@/redux/app/stateSelectors'
+import { ActiveBlock, DroppableBlockPosition } from '@/redux/app/types'
+import { useAppDispatch } from '@/redux/reduxHooks'
 
 export default function useDesignAreaDnd() {
   const { transferredBlocks } = useStateSelectors()

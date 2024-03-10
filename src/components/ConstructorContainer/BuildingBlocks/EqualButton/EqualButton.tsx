@@ -1,8 +1,9 @@
 import { HiOutlineBars2 } from 'react-icons/hi2'
 
-import styles from './equalButton.module.scss'
-import { useAppDispatch } from '@/redux/reduxHooks'
 import { calculateResult, clearDisplayValue } from '@/redux/app/appSlice'
+import { useAppDispatch } from '@/redux/reduxHooks'
+
+import styles from './equalButton.module.scss'
 
 export default function EqualButton() {
   const dispatch = useAppDispatch()

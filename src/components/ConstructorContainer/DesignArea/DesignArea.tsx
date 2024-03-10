@@ -1,5 +1,3 @@
-import React, { useId, useMemo } from 'react'
-import { createPortal } from 'react-dom'
 import {
   DndContext,
   DragOverlay,
@@ -7,19 +5,19 @@ import {
   useDroppable,
 } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import { Fragment, useId, useMemo } from 'react'
+import { createPortal } from 'react-dom'
 
 import useDesignAreaDnd from '@/hooks/dnd/useDesignAreaDnd'
 import { blocksIds } from '@/library/data'
 import useStateSelectors from '@/redux/app/stateSelectors'
-
 import type { Block } from '@/redux/app/types'
 
-import InstructionForDesignBlock from './InstructionForDesignBlock/InstructionForDesignBlock'
-import DropZoneForDisplayBlock from './DropZoneForDisplayBlock/DropZoneForDisplayBlock'
-
-import styles from './designArea.module.scss'
-import displayBlockStyles from './DropZoneForDisplayBlock/dropZoneForDisplayBlock.module.scss'
 import blockStyles from '../BuildingBlocks/BlockContainer/blocksContainer.module.scss'
+import DropZoneForDisplayBlock from './DropZoneForDisplayBlock/DropZoneForDisplayBlock'
+import displayBlockStyles from './DropZoneForDisplayBlock/dropZoneForDisplayBlock.module.scss'
+import InstructionForDesignBlock from './InstructionForDesignBlock/InstructionForDesignBlock'
+import styles from './designArea.module.scss'
 
 export default function DesignArea() {
   const { transferredBlocks, activeBlock, activeStatus } = useStateSelectors()
@@ -104,9 +102,9 @@ export default function DesignArea() {
             {transferredBlocks.map(
               block =>
                 block.type !== 'display' && (
-                  <React.Fragment key={block.id}>
+                  <Fragment key={block.id}>
                     {getBlockContainerForDesignArea(block.id)}
-                  </React.Fragment>
+                  </Fragment>
                 ),
             )}
           </div>
