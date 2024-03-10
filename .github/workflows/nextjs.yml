@@ -62,8 +62,6 @@ jobs:
         run: pnpm i
       - name: Build with Next.js
         run: pnpm build
-      - name: Export Next.js app
-        run: pnpm next export
       - name: Show folder contents
         run: ls -al
       - name: Upload artifact
