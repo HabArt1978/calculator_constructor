@@ -63,7 +63,7 @@ jobs:
       - name: Build with Next.js
         run: pnpm build
       - name: Show folder contents
-        run: ls -al
+        run: ls -al && ls -al .next && ls -al .next/dist
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
