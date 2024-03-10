@@ -2,7 +2,7 @@ import { FcAddImage } from 'react-icons/fc'
 
 import { ActiveBlock } from '@/redux/app/types'
 
-import styles from './InstructionForDesignBlock.module.scss'
+import styles from './instructionForDesignBlock.module.scss'
 
 interface InstructionForDesignBlockProps {
   setNodeRef: (element: HTMLElement | null) => void
