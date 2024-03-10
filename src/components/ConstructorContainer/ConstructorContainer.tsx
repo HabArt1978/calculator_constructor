@@ -1,7 +1,7 @@
 'use client'
 
 import { DndContext, DragOverlay } from '@dnd-kit/core'
-import React, { useId } from 'react'
+import { useId } from 'react'
 import { createPortal } from 'react-dom'
 
 import useConstructorContainerDnd from '@/hooks/dnd/useConstructorContainerDnd'

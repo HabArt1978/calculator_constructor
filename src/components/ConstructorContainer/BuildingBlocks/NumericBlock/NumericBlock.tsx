@@ -6,18 +6,18 @@ import { appendActiveDigit, invertActiveNumber } from '@/redux/app/appSlice'
 
 import styles from './numericBlock.module.scss'
 
-const buttonValues = [
-  '7',
-  '8',
-  '9',
-  '4',
-  '5',
-  '6',
-  '1',
-  '2',
-  '3',
+const buttonValues: Array<number | '+/-' | '.'> = [
+  7,
+  8,
+  9,
+  4,
+  5,
+  6,
+  1,
+  2,
+  3,
   '+/-',
-  '0',
+  0,
   '.',
 ]
 

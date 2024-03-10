@@ -76,7 +76,7 @@ export const appSlice = createSlice({
       state.operator = action.payload
     },
 
-    appendActiveDigit: (state, action: PayloadAction<number | ''>) => {
+    appendActiveDigit: (state, action: PayloadAction<number | '.'>) => {
       const value = state.operator ? state.secondNumber : state.firstNumber
       const newValue = `${value ?? ''}${action.payload}`
 
