@@ -1,10 +1,11 @@
 import { useSortable } from '@dnd-kit/sortable'
 
-import styles from '@/components/ConstructorContainer/DesignArea/BlockContainerForDesignArea/blockContainerForDesignArea.module.scss'
 import useStateSelectors from '@/redux/app/stateSelectors'
 import type { BlockContainerProp } from '@/redux/app/types'
 
-import BlockDropPositionIndicator from '../BlockDropPositionIndicator/BlockDropPositionIndicator'
+import BlockDropPositionIndicator from '@/components/ConstructorContainer/DesignArea/BlockDropPositionIndicator/BlockDropPositionIndicator'
+
+import styles from './blockContainerForDesignArea.module.scss'
 
 export default function BlockContainerForDesignArea({
   block,

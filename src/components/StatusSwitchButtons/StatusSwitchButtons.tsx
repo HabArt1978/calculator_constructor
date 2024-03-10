@@ -3,7 +3,6 @@
 import { MdDeleteForever, MdOutlineRemoveRedEye } from 'react-icons/md'
 import { PiBracketsAngleBold } from 'react-icons/pi'
 
-import styles from '@/components/statusSwitchButtons/statusSwitchButtons.module.scss'
 import useAlert from '@/hooks/useAlert'
 import {
   deleteDesignBlocks,
@@ -12,6 +11,8 @@ import {
 } from '@/redux/app/appSlice'
 import useStateSelectors from '@/redux/app/stateSelectors'
 import { useAppDispatch } from '@/redux/reduxHooks'
+
+import styles from './statusSwitchButtons.module.scss'
 
 export default function StatusSwitch() {
   const { activeStatus, transferredBlocks } = useStateSelectors()
